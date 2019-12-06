@@ -1,0 +1,11 @@
+#!/bin/bash
+#SBATCH --job-name=BE_V2O5H2O_I44
+#SBATCH --partition=q28
+#SBATCH --mem=70G
+#SBATCH --nodes=1
+#SBATCH --time=40:00:00
+#SBATCH --ntasks-per-node=28
+#SBATCH --cpus-per-task=1
+source /home/siva/.gpaw1_5
+
+mpiexec --mca mpi_warn_on_fork 28 gpaw-python relaxgm_withMLmodel.py
