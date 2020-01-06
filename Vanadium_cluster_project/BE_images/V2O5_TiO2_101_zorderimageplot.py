@@ -84,7 +84,7 @@ def plot_conf(ax, atoms, rot=False):
 
 
 
-data=read('2VO3H_2H2O_TiO2_101_2by6cell_stmDFTrelaxed_E-3713.6762.traj@:')
+data=read('2VO3H_H2O_TiO2_101_2by6cell_transDFTrelaxed_E-3699.02687.traj@:')
 
 for j in range(len(data)):
     image = data[j]
@@ -127,6 +127,6 @@ for j in range(len(data)):
    
     gs.update(wspace=0.00,hspace=0.00)
     plt.tight_layout()
-    name ='2VO3H_2H2O_TiO2_101_2by6cell_DFTcsr_Ov_g{}'.format(j)
+    name ='2VO3H_H2O_TiO2_101_2by6cell_transDFTcsr_Ov_g{}'.format(j)
     savefig(name,bbox_inches='tight')
     plt.show()
