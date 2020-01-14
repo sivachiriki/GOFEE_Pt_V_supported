@@ -1,5 +1,6 @@
 from __future__ import division
 import matplotlib
+from sys import argv
 #matplotlib.use('Agg')  # Can also use 'tkagg' or 'webagg'
 #from plot_neb_tio2 import *
 from matplotlib.offsetbox import TextArea, VPacker, AnnotationBbox
@@ -68,8 +69,8 @@ def plot_conf(ax, atoms, rot=False):
     for i, atom in enumerate(atoms):
         if (atom.number ==23):
            colors[i] =[76/255, 153/255, 0/255]
-        if (atom.number ==8 and i >= 648):
-           colors[i] =[153/255, 0/255, 0/255]
+        if (atom.number ==8 and i >= 431):
+           colors[i] =[102/255, 0/255, 0/255]
         if (atom.number ==1):
            colors[i] =[255/255, 255/255, 255/255]
     alp = [None] * colors.shape[0]
@@ -83,8 +84,8 @@ def plot_conf(ax, atoms, rot=False):
     plot_atoms(ax, atoms, [0,2,1], colors, alp, z=-1)
 
 
-
-data=read('2VO3H_H2O_TiO2_101_2by6cell_transDFTrelaxed_E-3699.02687.traj@:')
+file_name = sys.argv[1]
+data=read(sys.argv[1]+'@:')
 
 for j in range(len(data)):
     image = data[j]
@@ -94,10 +95,10 @@ for j in range(len(data)):
    
     #image = image * (2,2,1)
     # Make array of indices for atoms that should be repeated in x and y directions                                       
-    plt.figure(figsize=(6.0,7.80))
+    plt.figure(figsize=(6.0,8.80))
     
     gs = gridspec.GridSpec(2, 1,
-                           height_ratios=[6.32,14.85])
+                           height_ratios=[6.32,13.40])
     
     cell = image.get_cell()
    
@@ -108,7 +109,7 @@ for j in range(len(data)):
     
     print(cell[0,0])
     print(cell[1,1])
-    ax.set_xlim([0.0, 20.0])
+    ax.set_xlim([0.0, 19.0])
     ax.set_ylim([13.50, 22.0])
     ax.set_yticks([])
     ax.set_xticks([])
@@ -119,14 +120,16 @@ for j in range(len(data)):
     img = image.copy()
     plot_conf(ax, img, rot=True)
     
-    ax.set_xlim([0.0, 17.0])
-    ax.set_ylim([0.0, 17.0])
+    ax.set_xlim([0.0, 19.0])
+    ax.set_ylim([0.0, 19.0])
     ax.set_yticks([])
     ax.set_xticks([])
     ax.set(aspect=1)
    
     gs.update(wspace=0.00,hspace=0.00)
     plt.tight_layout()
-    name ='2VO3H_H2O_TiO2_101_2by6cell_transDFTcsr_Ov_g{}'.format(j)
+    name =sys.argv[2]
+    #name ='2VO3H_2H2O_TiO2_101_2by6cell_Ov_g{}'.format(j)
     savefig(name,bbox_inches='tight')
     plt.show()
+    exit()
