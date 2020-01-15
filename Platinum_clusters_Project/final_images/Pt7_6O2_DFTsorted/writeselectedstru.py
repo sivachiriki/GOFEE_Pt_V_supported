@@ -26,7 +26,7 @@ world = mpi.world
 
 data1=read('Pt7_6O2_Al2O3_KRRfund9l_DFTrelaxedsorted.traj@:')
 traj = Trajectory('Pt7_6O2_Al2O3_KRRfund9l_DFTrelaxedsorted1.traj','w')
-numbers =[0,1,2,3,4,7,9,10,14,18]
+numbers =[1,2,3,4,5,6,7,8,9]
 for a,j in enumerate(numbers):
     traj.write(data1[j])
     print(data1[j].get_potential_energy())

@@ -25,7 +25,7 @@ import ase.parallel as mpi
 world = mpi.world
 
 traj = Trajectory('Pt7_CO_Al2O3_KRRfund9l_DFTrelaxed.traj','w')
-for i in range(1,8):
+for i in range(1,10):
     data =[]
     stru = '../Pt7_CO_{}/Pt7_CO_Al2O3_0001surface_DFTrelaxed.traj'.format(i)
     data = read(stru+'@:')

@@ -25,7 +25,7 @@ import ase.parallel as mpi
 world = mpi.world
 
 traj = Trajectory('Pt7_7O2_Al2O3_KRRfund9l_DFTrelaxed.traj','w')
-for i in range(1,9):
+for i in range(1,12):
     data =[]
     stru = '../Pt7_7O2_{}/Pt7_7O2_Al2O3_KRRfund9l_DFTrelaxed.traj'.format(i)
     data = read(stru+'@:')
@@ -36,6 +36,6 @@ for i in range(1,9):
 data1=read('Pt7_7O2_Al2O3_KRRfund9l_DFTrelaxed.traj@:')
 data1.sort(key=lambda x: x.get_potential_energy())
 traj = Trajectory('Pt7_7O2_Al2O3_KRRfund9l_DFTrelaxedsorted.traj','w')
-for j in range(0,len(data1)):
+for j in range(2,len(data1)):
     traj.write(data1[j])
     print(data1[j].get_potential_energy())

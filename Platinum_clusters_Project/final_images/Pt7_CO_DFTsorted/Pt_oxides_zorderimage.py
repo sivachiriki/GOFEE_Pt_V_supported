@@ -71,13 +71,13 @@ def plot_conf(ax, atoms, rot=False):
         if (atom.number ==6):
            colors[i] =[0.1, 0.2, 0.9]
         if (atom.number ==8 and i >= 135 and i <=144 ):
-           colors[i] =[153/255, 0/255, 0/255]
+           colors[i] =[102/255, 0/255, 0/255]
         if (atom.number ==8 and i >= 279 and i <=288 ):
-           colors[i] =[153/255, 0/255, 0/255]
+           colors[i] =[102/255, 0/255, 0/255]
         if (atom.number ==8 and i >= 423 and i <=432 ):
-           colors[i] =[153/255, 0/255, 0/255]
+           colors[i] =[102/255, 0/255, 0/255]
         if (atom.number ==8 and i >= 567 and i <=576 ):
-           colors[i] =[153/255, 0/255, 0/255]
+           colors[i] =[102/255, 0/255, 0/255]
 
     alp = [None] * colors.shape[0]
     for i,a in enumerate(atoms):
@@ -90,10 +90,9 @@ def plot_conf(ax, atoms, rot=False):
     plot_atoms(ax, atoms, [0,2,1], colors, alp, z=-1)
 
 
+data=read(sys.argv[1]+'@:')
 
-data=read('Pt7_CO_Al2O3_KRRfund9l_DFTrelaxedsorted.traj@:')
-
-for j in range(len(data)):
+for j in range(1,len(data)):
     image = data[j] #* (2,2,1) 
     for i,a in enumerate(image):
         if i ==48 and image.positions[i,1]>8.0 :
@@ -153,6 +152,8 @@ for j in range(len(data)):
     
     gs.update(wspace=0.00,hspace=0.00)
     plt.tight_layout()
-    name ='Pt7CO_Al2O3_0001_Echem_DFTopt_{}'.format(j)
+    name =sys.argv[2]
+    name =name+'_{}'.format(j)
     savefig(name,bbox_inches='tight')
     #show()
+    #exit()
