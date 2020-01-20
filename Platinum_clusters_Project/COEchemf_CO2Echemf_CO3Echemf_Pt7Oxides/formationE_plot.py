@@ -66,6 +66,9 @@ Pt7O4CO = read('Pt7O4CO_Al2O3_chem_COform_LM2DFTrelaxed.traj')
 Pt7O6CO = read('Pt7O6CO_Al2O3_Chem_COform_LM2DFTrelaxed.traj')
 Pt7O8CO = read('Pt7O8CO_Al2O3_Chem_COform_LM1DFTrelaxed.traj')
 Pt7O10CO = read('Pt7O10CO_Al2O3_Chem_COfrom_LM2DFTrelaxed.traj')
+Pt7O12CO = read('Pt7O12CO_Al2O3_Chem_COform_LM3DFTrelaxed.traj')
+Pt7O14CO = read('Pt7O14CO_Al2O3_Chem_COform_LM3DFTrelaxed.traj')
+#Pt7O16CO = read('Pt7O16CO_Al2O3_Chem_COform_LM3DFTrelaxed.traj')
 
 E_Pt7O0CO = Pt7O0CO.get_potential_energy()
 E_Pt7O2CO = Pt7O2CO.get_potential_energy()
@@ -73,10 +76,13 @@ E_Pt7O4CO = Pt7O4CO.get_potential_energy()
 E_Pt7O6CO = Pt7O6CO.get_potential_energy()
 E_Pt7O8CO = Pt7O8CO.get_potential_energy()
 E_Pt7O10CO = Pt7O10CO.get_potential_energy()
+E_Pt7O12CO = Pt7O12CO.get_potential_energy()
+E_Pt7O14CO = Pt7O14CO.get_potential_energy()
+#E_Pt7O16CO = Pt7O16CO.get_potential_energy()
 
-gm_tru_CO =[Pt7O0CO,Pt7O2CO,Pt7O4CO,Pt7O6CO,Pt7O8CO,Pt7O10CO]
+gm_tru_CO =[Pt7O0CO,Pt7O2CO,Pt7O4CO,Pt7O6CO,Pt7O8CO,Pt7O10CO,Pt7O12CO,Pt7O14CO]
 print(gm_tru_CO[-1].get_potential_energy())
-N_O = [0,2,4,6,8,10]
+N_O = [0,2,4,6,8,10,12,14]
 # color labels
 colors = {}
 color_lib =['#bf40bf','#377eb8','#4daf4a','#984ea3','#999999','#fdbf6f', '#ff7f00','#eeefff','#ffff33']
@@ -135,7 +141,7 @@ E_CO = CO.get_potential_energy()
 Pt7O2CO = read('Pt7O2CO_Al2O3_chem_CO3form_LM2DFTrelaxed.traj')
 Pt7O4CO = read('Pt7O4CO_Al2O3_chem_CO3form_LM4DFTrelaxed.traj')
 Pt7O6CO = read('Pt7O6CO_Al2O3_Chem_CO3form_LM3DFTrelaxed.traj')
-#Pt7O8CO = read('')
+Pt7O8CO = read('Pt7O8CO_Al2O3_Chem_CO3form_LM3DFTrelaxed.traj')
 Pt7O10CO = read('Pt7O10CO_Al2O3_Chem_CO3from_GMDFTrelaxed.traj')
 Pt7O12CO = read('Pt7O12CO_Al2O3_Chem_CO3form_GMDFTrelaxed.traj')
 Pt7O14CO = read('Pt7O14CO_Al2O3_Chem_CO3form_LMDFTrelaxed.traj')
@@ -144,18 +150,18 @@ Pt7O16CO = read('Pt7O16CO_Al2O3_Chem_CO3form_GMDFTrelaxed.traj')
 E_Pt7O2CO = Pt7O2CO.get_potential_energy()
 E_Pt7O4CO = Pt7O4CO.get_potential_energy()
 E_Pt7O6CO = Pt7O6CO.get_potential_energy()
-#E_Pt7O8CO = Pt7O8CO.get_potential_energy()
+E_Pt7O8CO = Pt7O8CO.get_potential_energy()
 E_Pt7O10CO = Pt7O10CO.get_potential_energy()
 E_Pt7O12CO = Pt7O12CO.get_potential_energy()
 E_Pt7O14CO = Pt7O14CO.get_potential_energy()
 E_Pt7O16CO = Pt7O16CO.get_potential_energy()
 
-gm_tru_CO =[Pt7O2CO,Pt7O4CO,Pt7O6CO,Pt7O10CO,Pt7O12CO,Pt7O14CO,Pt7O16CO]
+gm_tru_CO =[Pt7O2CO,Pt7O4CO,Pt7O6CO,Pt7O8CO,Pt7O10CO,Pt7O12CO,Pt7O14CO,Pt7O16CO]
 print(gm_tru_CO[-1].get_potential_energy())
-N_O = [2,4,6,10,12,14,16]
+N_O = [2,4,6,8,10,12,14,16]
 # color labels
 colors = {}
-color_lib =['#377eb8','#4daf4a','#984ea3','#fdbf6f', '#ff7f00','#eeefff','#ffff33']
+color_lib =['#377eb8','#4daf4a','#984ea3','#999999','#fdbf6f', '#ff7f00','#eeefff','#ffff33']
 for i,atoms in enumerate(gm_tru_CO):
     colors[i] = color_lib[i]
 # cal formation energy
@@ -173,19 +179,25 @@ E_CO = CO.get_potential_energy()
 Pt7O4CO = read('Pt7O4CO_Al2O3_chem_CO2formonsurface_LM3DFTrelaxed.traj')
 Pt7O6CO = read('Pt7O6CO_Al2O3_Chem_CO2formonsurface_LM1DFTrelaxed.traj')
 Pt7O8CO = read('Pt7O8CO_Al2O3_Chem_CO2formonsurface_GMDFTrelaxed.traj')
+Pt7O10CO = read('Pt7O10CO_Al2O3_Chem_CO2fromonsurface_LM3DFTrelaxed.traj')
+Pt7O12CO = read('Pt7O12CO_Al2O3_Chem_CO2formonsurface_LM2DFTrelaxed.traj')
+Pt7O14CO = read('Pt7O14CO_Al2O3_Chem_CO2formonsurface_LM2DFTrelaxed.traj')
 Pt7O16CO = read('Pt7O16CO_Al2O3_Chem_CO2formonsurface_LMDFTrelaxed.traj')
 
 E_Pt7O4CO = Pt7O4CO.get_potential_energy()
 E_Pt7O6CO = Pt7O6CO.get_potential_energy()
 E_Pt7O8CO = Pt7O8CO.get_potential_energy()
+E_Pt7O10CO = Pt7O10CO.get_potential_energy()
+E_Pt7O12CO = Pt7O12CO.get_potential_energy()
+E_Pt7O14CO = Pt7O14CO.get_potential_energy()
 E_Pt7O16CO = Pt7O16CO.get_potential_energy()
 
-gm_tru_CO =[Pt7O4CO,Pt7O6CO,Pt7O8CO,Pt7O16CO]
+gm_tru_CO =[Pt7O4CO,Pt7O6CO,Pt7O8CO,Pt7O10CO,Pt7O12CO,Pt7O14CO,Pt7O16CO]
 print(gm_tru_CO[-1].get_potential_energy())
-N_O = [4,6,8,16]
+N_O = [4,6,8,10,12,14,16]
 # color labels
 colors = {}
-color_lib =['#4daf4a','#984ea3','#999999','#ffff33']
+color_lib =['#4daf4a','#984ea3','#999999','#fdbf6f','#ff7f00','#eeefff','#ffff33']
 for i,atoms in enumerate(gm_tru_CO):
     colors[i] = color_lib[i]
 # cal formation energy
@@ -199,7 +211,7 @@ for i, nu in enumerate(N_O):
     ax.plot(N_O[i],E_ads[i],marker="o",color=colors[i])
 ##################################################################################################
 ax.set_ylabel(r'E$_f$ (eV)')
-ax.set_xlabel(r'No. of O (Not included O from CO)')
+ax.set_xlabel(r'No. of O')
 ax.set_xticks(np.arange(0, 20, step=1))
 plt.legend()
 savefig('COEf_CO2Ef_CO3Ef_O2Ef_Pt7Oxides.png')
