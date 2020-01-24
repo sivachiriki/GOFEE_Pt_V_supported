@@ -55,7 +55,8 @@ E_f_correct[0] =0.0
 fig, ax = plt.subplots(1,1,figsize=(7,7))
 ax.plot(N_O,E_f_correct,marker="o",color='#1E90FF',label='E$_{f}$ of Pt$_7$O$_y$/Al$_2$O$_3$(0001)')
 for i, nu in enumerate(N_O):
-    ax.plot(N_O[i],E_f_correct[i],marker="o",color=colors[i])
+    #ax.plot(N_O[i],E_f_correct[i],marker="o",color=colors[i])
+    ax.plot(N_O[i],E_f_correct[i],marker="o",color='#1E90FF')
 
 ################################# E_ads of CO ####################################################
 CO = read('CO_molecule_DFTrelaxed.traj')
@@ -96,7 +97,8 @@ for i,atoms in enumerate(gm_tru_CO):
 # plot formation E vs No. of Oxygens
 ax.plot(N_O,E_ads,marker="o",color='#0f0f0f',label='E$_{f}$ of Pt$_7$O$_{y}$CO/Al$_2$O$_3$(0001)')
 for i, nu in enumerate(N_O):
-    ax.plot(N_O[i],E_ads[i],marker="o",color=colors[i])
+    #ax.plot(N_O[i],E_ads[i],marker="o",color=colors[i])
+    ax.plot(N_O[i],E_ads[i],marker="o",color='#0f0f0f')
 #################################### E_chem CO2 attached to edge of cluster #######################
 CO = read('CO_molecule_DFTrelaxed.traj')
 E_CO = CO.get_potential_energy()
@@ -134,7 +136,8 @@ for i,atoms in enumerate(gm_tru_CO):
 # plot formation E vs No. of Oxygens
 ax.plot(N_O,E_ads,marker="o",color='#8EBA42',label='E$_{f}$ of Pt$_7$O$_{(y-1)}$CO$_2$/Al$_2$O$_3$(0001)')
 for i, nu in enumerate(N_O):
-    ax.plot(N_O[i],E_ads[i],marker="o",color=colors[i])
+    #ax.plot(N_O[i],E_ads[i],marker="o",color=colors[i])
+    ax.plot(N_O[i],E_ads[i],marker="o",color='#8EBA42')
 ########################## E_chem of CO3 (carbene) ###############################################
 CO = read('CO_molecule_DFTrelaxed.traj')
 E_CO = CO.get_potential_energy()
@@ -172,7 +175,8 @@ for i,atoms in enumerate(gm_tru_CO):
 # plot formation E vs No. of Oxygens
 ax.plot(N_O,E_ads,marker="o",color='#FF0000',label='E$_{f}$ of Pt$_7$O$_{(y-2)}$-CO$_3$/Al$_2$O$_3$(0001)')
 for i, nu in enumerate(N_O):
-    ax.plot(N_O[i],E_ads[i],marker="o",color=colors[i])
+    #ax.plot(N_O[i],E_ads[i],marker="o",color=colors[i])
+    ax.plot(N_O[i],E_ads[i],marker="o",color='#FF0000') 
 ################################## E_chem of CO2 detached from cluster ###########################
 CO = read('CO_molecule_DFTrelaxed.traj')
 E_CO = CO.get_potential_energy()
@@ -208,7 +212,8 @@ for i,atoms in enumerate(gm_tru_CO):
 # plot formation E vs No. of Oxygens
 ax.plot(N_O,E_ads,marker="o",color='#FF00FF',label='E$_{f}$ of Pt$_7$O$_{(y-1)}$--CO$_2$/Al$_2$O$_3$(0001)')
 for i, nu in enumerate(N_O):
-    ax.plot(N_O[i],E_ads[i],marker="o",color=colors[i])
+    #ax.plot(N_O[i],E_ads[i],marker="o",color=colors[i])
+    ax.plot(N_O[i],E_ads[i],marker="o",color='#FF00FF')
 ##################################################################################################
 ax.set_ylabel(r'E$_f$ (eV)')
 ax.set_xlabel(r'No. of O')
