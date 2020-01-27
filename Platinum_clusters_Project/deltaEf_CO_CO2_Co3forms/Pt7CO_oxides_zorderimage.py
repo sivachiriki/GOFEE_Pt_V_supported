@@ -112,15 +112,18 @@ for j in range(0,len(data)):
             image.positions[i,1] =image.positions[i,1]+12.429
             image.positions[i,0] =image.positions[i,0]-7.176
 
-        if a.position[0] >7.100 and i<=151:
+        if a.position[1] <2.00:
+           image.positions[i,1] =image.positions[i,1]+12.429
+           image.positions[i,0] =image.positions[i,0]-7.176
+        if a.position[0] >7.100:
            image.positions[i,0] =image.positions[i,0]-14.352
     
     #write('newimage.traj',image)
-    
+    #view(image)
     plt.figure(figsize=(4.0,5.0))
    # ax= 'ax'.format(j) 
     gs = gridspec.GridSpec(2, 1,
-                           height_ratios=[6.86,10.32])
+                           height_ratios=[6.86,9.6])
     
     cell = image.get_cell()
     
@@ -130,7 +133,7 @@ for j in range(0,len(data)):
     img = image.copy()
     plot_conf(ax, img)
     
-    ax.set_xlim([-6.2, 10.5])
+    ax.set_xlim([-7.0, 7.0])
     ax.set_ylim([10.7, 20.0])
     ax.set_yticks([])
     ax.set_xticks([])
@@ -145,10 +148,10 @@ for j in range(0,len(data)):
     img = image.copy()
     plot_conf(ax, img, rot=True)
     
-    ax.set_xlim([-6.2, 10.50])
-    ax.set_ylim([0.0, 14.0])
+    ax.set_xlim([-7.0, 7.0])
+    ax.set_ylim([3.0, 16.0])
     name ='$\Delta E_f = {}$ eV'.format(energydif)
-    ax.text(0.15, -0.1, name, transform=ax.transAxes,fontsize=20)
+    ax.text(0.1, -0.1, name, transform=ax.transAxes,fontsize=20)
     ax.set_yticks([])
     ax.set_xticks([])
     ax.set(aspect=1)

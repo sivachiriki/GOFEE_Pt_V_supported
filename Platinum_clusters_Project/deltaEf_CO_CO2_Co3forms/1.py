@@ -3,11 +3,46 @@ from ase.vibrations import Vibrations
 from ase.thermochemistry import IdealGasThermo
 from ase.io import read,write
 import matplotlib.pyplot as plt
+import matplotlib.lines
+from matplotlib.transforms import Bbox, TransformedBbox
+from matplotlib.legend_handler import HandlerBase
+from matplotlib.image import BboxImage
 from gpaw import GPAW, FermiDirac, PoissonSolver, Mixer,PW
 from ase.calculators.vasp import Vasp
 from matplotlib.pyplot import *
 import numpy as np
 import os
+
+
+class HandlerLineImage(HandlerBase):
+
+    def __init__(self, path, space=15, offset = 10 ):
+        self.space=space
+        self.offset=offset
+        self.image_data = plt.imread(path)
+        super(HandlerLineImage, self).__init__()
+
+    def create_artists(self, legend, orig_handle,
+                       xdescent, ydescent, width, height, fontsize, trans):
+
+        l = matplotlib.lines.Line2D([xdescent+self.offset,xdescent+(width-self.space)/3.+self.offset],
+                                     [ydescent+height/2., ydescent+height/2.])
+        l.update_from(orig_handle)
+        l.set_clip_on(False)
+        l.set_transform(trans)
+
+        bb = Bbox.from_bounds(xdescent +(width+self.space)/3.+self.offset,
+                              ydescent,
+                              height*self.image_data.shape[1]/self.image_data.shape[0],
+                              height)
+
+        tbb = TransformedBbox(bb, trans)
+        image = BboxImage(tbb)
+        image.set_data(self.image_data)
+
+        self.update_prop(image, orig_handle, legend)
+        return [l,image]
+
 
 #  formation energy of oxygen
 Pt7Ox=[[0, 0.0],
@@ -50,7 +85,7 @@ Pt7OxCO3=[[2, -5.043113192502336],
 [8, -11.208205733651717],
 [10, -12.52795522340297],
 [12, -14.14148595635477],
-[14, -14.119295751828105],
+[14, -14.839032212283911],
 [16, -13.057021308935617]]
 Pt7OxCO3=np.array(Pt7OxCO3)
 # chemisorption of CO2 dettached from cluster 
@@ -74,8 +109,9 @@ for i in range(len(Pt7OxCO)):
     delta_E_f_CO[i] =(Pt7OxCO[i,1]-Pt7Ox[i,1])
     print(Pt7OxCO[i,0],delta_E_f_CO[i])
 # plot formation E vs No. of Oxygens
-fig, ax = plt.subplots(1,1,figsize=(7,7))
-ax.plot(Pt7OxCO[:,0],delta_E_f_CO,marker="o",color='#0f0f0f',label='Pt$_7$O$_y$CO')
+fig, ax = plt.subplots(1,1,figsize=(11,9))
+#ax.plot(Pt7OxCO[:,0],delta_E_f_CO,marker="o",color='#0f0f0f',label='Pt$_7$O$_y$CO')
+coattached, =ax.plot(Pt7OxCO[:,0],delta_E_f_CO,marker="o",color='#0f0f0f')
 for i in range(len(Pt7OxCO)):
     ax.plot(Pt7OxCO[i,0],delta_E_f_CO[i],marker="o",color='#0f0f0f')
 ######################### Co2 attached ##########################################################
@@ -88,7 +124,8 @@ for i in range(len(Pt7OxCO2)):
     delta_E_f_CO2[i] =(Pt7OxCO2[i,1]-Pt7Ox[i+1,1])
     print(Pt7OxCO2[i,0],delta_E_f_CO2[i])
 # plot formation E vs No. of Oxygens
-ax.plot(Pt7OxCO2[:,0],delta_E_f_CO2,marker="o",color='#8EBA42',label='Pt$_7$O$_{(y-1)}$CO$_2$')
+#ax.plot(Pt7OxCO2[:,0],delta_E_f_CO2,marker="o",color='#8EBA42',label='Pt$_7$O$_{(y-1)}$CO$_2$')
+co2attached, =ax.plot(Pt7OxCO2[:,0],delta_E_f_CO2,marker="o",color='#8EBA42')
 for i in range(len(Pt7OxCO2)):
     ax.plot(Pt7OxCO2[i,0],delta_E_f_CO2[i],marker="o",color='#8EBA42')
 ######################## CO3 attached ############################################################
@@ -101,7 +138,8 @@ for i in range(len(Pt7OxCO3)):
     delta_E_f_CO3[i] =(Pt7OxCO3[i,1]-Pt7Ox[i+1,1])
     print(Pt7OxCO3[i,0],delta_E_f_CO3[i])
 # plot formation E vs No. of Oxygens
-ax.plot(Pt7OxCO3[:,0],delta_E_f_CO3,marker="o",color='#FF0000',label='Pt$_7$O$_{(y-2)}$CO$_3$')
+#ax.plot(Pt7OxCO3[:,0],delta_E_f_CO3,marker="o",color='#FF0000',label='Pt$_7$O$_{(y-2)}$CO$_3$')
+co3attached, = plt.plot(Pt7OxCO3[:,0],delta_E_f_CO3,marker="o",color='#FF0000')
 for i in range(len(Pt7OxCO3)):
     ax.plot(Pt7OxCO3[i,0],delta_E_f_CO3[i],marker="o",color='#FF0000')
 ############################### CO2 detached #####################################################
@@ -114,13 +152,19 @@ for i in range(len(Pt7OxCO2detached)):
     delta_E_f_CO3[i] =(Pt7OxCO2detached[i,1]-Pt7Ox[i+2,1])
     print(Pt7OxCO2detached[i,0],delta_E_f_CO3[i])
 # plot formation E vs No. of Oxygens
-ax.plot(Pt7OxCO2detached[:,0],delta_E_f_CO3,marker="o",color='#FF00FF',label='Pt$_7$O$_{(y-1)}--$CO$_2$')
+#ax.plot(Pt7OxCO2detached[:,0],delta_E_f_CO3,marker="o",color='#FF00FF',label='Pt$_7$O$_{(y-1)}--$CO$_2$')
+co2detached, = plt.plot(Pt7OxCO2detached[:,0],delta_E_f_CO3,marker="o",color='#FF00FF')
 for i in range(len(Pt7OxCO2detached)):
     ax.plot(Pt7OxCO2detached[i,0],delta_E_f_CO3[i],marker="o",color='#FF00FF')
 ##################################################################################################
+plt.legend([coattached,co2attached,co3attached, co2detached], ["","","", ""],
+   handler_map={coattached:HandlerLineImage("Pt7Oxides_template_COform.png"),co2attached:HandlerLineImage("Pt7Oxides_template_CO2form1.png"),co3attached: HandlerLineImage("Pt7Oxides_template_CO3form.png"), co2detached: HandlerLineImage("Pt7Oxides_template_CO2form4.png")},
+   handlelength=3.0, labelspacing=0.0, fontsize=40, borderpad=0.2, loc=2,
+    handletextpad=0.0, borderaxespad=0.1)
+################################################################################################
 ax.set_ylabel(r'Extra Stability of Pt$_7$-Oxides with CO [$\Delta$E$_f$ (eV)]')
 ax.set_xlabel(r'No. of O')
 ax.set_xticks(np.arange(0, 20, step=1))
-plt.legend()
+#plt.legend()
 savefig('delta_COEf_CO2Ef_CO3Ef_O2Ef_Pt7Oxides.png')
 plt.show()
