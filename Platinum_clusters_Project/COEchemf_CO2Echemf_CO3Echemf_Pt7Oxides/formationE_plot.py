@@ -3,11 +3,44 @@ from ase.vibrations import Vibrations
 from ase.thermochemistry import IdealGasThermo
 from ase.io import read,write
 import matplotlib.pyplot as plt
+import matplotlib.lines
+from matplotlib.transforms import Bbox, TransformedBbox
+from matplotlib.legend_handler import HandlerBase
+from matplotlib.image import BboxImage
 from gpaw import GPAW, FermiDirac, PoissonSolver, Mixer,PW
 from ase.calculators.vasp import Vasp
 from matplotlib.pyplot import *
 import numpy as np
 import os
+
+class HandlerLineImage(HandlerBase):
+
+    def __init__(self, path, space=15, offset = 10 ):
+        self.space=space
+        self.offset=offset
+        self.image_data = plt.imread(path)
+        super(HandlerLineImage, self).__init__()
+
+    def create_artists(self, legend, orig_handle,
+                       xdescent, ydescent, width, height, fontsize, trans):
+
+        l = matplotlib.lines.Line2D([xdescent+self.offset,xdescent+(width-self.space)/3.+self.offset],
+                                     [ydescent+height/2., ydescent+height/2.])
+        l.update_from(orig_handle)
+        l.set_clip_on(False)
+        l.set_transform(trans)
+
+        bb = Bbox.from_bounds(xdescent +(width+self.space)/3.+self.offset,
+                              ydescent,
+                              height*self.image_data.shape[1]/self.image_data.shape[0],
+                              height)
+
+        tbb = TransformedBbox(bb, trans)
+        image = BboxImage(tbb)
+        image.set_data(self.image_data)
+
+        self.update_prop(image, orig_handle, legend)
+        return [l,image]
 ################################# E_form of O2 ####################################################
 # read stru of GM Pt7 oxides
 O2 = read('O2_kpts221.traj')
@@ -53,7 +86,7 @@ for i,atoms in enumerate(gm_tru):
 E_f_correct[0] =0.0
 # plot formation E vs No. of Oxygens
 fig, ax = plt.subplots(1,1,figsize=(7,7))
-ax.plot(N_O,E_f_correct,marker="o",color='#1E90FF',label='E$_{f}$ of Pt$_7$O$_y$/Al$_2$O$_3$(0001)')
+PtOxides, = ax.plot(N_O,E_f_correct,marker="o",color='#1E90FF')
 for i, nu in enumerate(N_O):
     #ax.plot(N_O[i],E_f_correct[i],marker="o",color=colors[i])
     ax.plot(N_O[i],E_f_correct[i],marker="o",color='#1E90FF')
@@ -95,7 +128,7 @@ for i,atoms in enumerate(gm_tru_CO):
     E_ads[i] = (gm_tru_CO[i].get_potential_energy() - gm_tru[0].get_potential_energy() - CO.get_potential_energy() - (N_O[i])*(0.5000*O2.get_potential_energy()+Oxygen_correct))
     print(N_O[i],E_ads[i])
 # plot formation E vs No. of Oxygens
-ax.plot(N_O,E_ads,marker="o",color='#0f0f0f',label='E$_{f}$ of Pt$_7$O$_{y}$CO/Al$_2$O$_3$(0001)')
+coattached, =ax.plot(N_O,E_ads,marker="o",color='#0f0f0f')
 for i, nu in enumerate(N_O):
     #ax.plot(N_O[i],E_ads[i],marker="o",color=colors[i])
     ax.plot(N_O[i],E_ads[i],marker="o",color='#0f0f0f')
@@ -132,10 +165,48 @@ for i,atoms in enumerate(gm_tru_CO):
     E_ads[i] = (gm_tru_CO[i].get_potential_energy() - gm_tru[0].get_potential_energy() - CO.get_potential_energy() - (N_O[i])*(0.5000*O2.get_potential_energy()+Oxygen_correct))
     print(N_O[i],E_ads[i])
 # plot formation E vs No. of Oxygens
-ax.plot(N_O,E_ads,marker="o",color='#8EBA42',label='E$_{f}$ of Pt$_7$O$_{(y-1)}$CO$_2$/Al$_2$O$_3$(0001)')
+co2attached, = ax.plot(N_O,E_ads,marker="o",color='#8EBA42')
 for i, nu in enumerate(N_O):
     #ax.plot(N_O[i],E_ads[i],marker="o",color=colors[i])
     ax.plot(N_O[i],E_ads[i],marker="o",color='#8EBA42')
+################################## E_chem of CO2 detached from cluster ###########################
+CO = read('CO_molecule_DFTrelaxed.traj')
+E_CO = CO.get_potential_energy()
+Pt7O4CO = read('Pt7O4CO_Al2O3_chem_CO2formonsurface_LM3DFTrelaxed.traj')
+Pt7O6CO = read('Pt7O6CO_Al2O3_Chem_CO2formonsurface_LM1DFTrelaxed.traj')
+Pt7O8CO = read('Pt7O8CO_Al2O3_Chem_CO2formonsurface_GMDFTrelaxed.traj')
+Pt7O10CO = read('Pt7O10CO_Al2O3_Chem_CO2fromonsurface_LM3DFTrelaxed.traj')
+Pt7O12CO = read('Pt7O12CO_Al2O3_Chem_CO2formonsurface_LM2DFTrelaxed.traj')
+Pt7O14CO = read('Pt7O14CO_Al2O3_Chem_CO2formonsurface_LM2DFTrelaxed.traj')
+Pt7O16CO = read('Pt7O16CO_Al2O3_Chem_CO2formonsurface_LMDFTrelaxed.traj')
+
+E_Pt7O4CO = Pt7O4CO.get_potential_energy()
+E_Pt7O6CO = Pt7O6CO.get_potential_energy()
+E_Pt7O8CO = Pt7O8CO.get_potential_energy()
+E_Pt7O10CO = Pt7O10CO.get_potential_energy()
+E_Pt7O12CO = Pt7O12CO.get_potential_energy()
+E_Pt7O14CO = Pt7O14CO.get_potential_energy()
+E_Pt7O16CO = Pt7O16CO.get_potential_energy()
+
+gm_tru_CO =[Pt7O4CO,Pt7O6CO,Pt7O8CO,Pt7O10CO,Pt7O12CO,Pt7O14CO,Pt7O16CO]
+print(gm_tru_CO[-1].get_potential_energy())
+N_O = [4,6,8,10,12,14,16]
+# color labels
+colors = {}
+color_lib =['#4daf4a','#984ea3','#999999','#fdbf6f','#ff7f00','#eeefff','#ffff33']
+for i,atoms in enumerate(gm_tru_CO):
+    colors[i] = color_lib[i]
+# cal formation energy
+E_ads =np.zeros(len(gm_tru_CO))
+for i,atoms in enumerate(gm_tru_CO):
+    E_ads[i] = (gm_tru_CO[i].get_potential_energy() - gm_tru[0].get_potential_energy() - CO.get_potential_energy() - (N_O[i])*(0.5000*O2.get_potential_energy()+Oxygen_correct))
+    print(N_O[i],E_ads[i])
+# plot formation E vs No. of Oxygens
+co2detached, = ax.plot(N_O,E_ads,marker="o",color='#FF00FF')
+for i, nu in enumerate(N_O):
+    #ax.plot(N_O[i],E_ads[i],marker="o",color=colors[i])
+    ax.plot(N_O[i],E_ads[i],marker="o",color='#FF00FF')
+##################################################################################################
 ########################## E_chem of CO3 (carbene) ###############################################
 CO = read('CO_molecule_DFTrelaxed.traj')
 E_CO = CO.get_potential_energy()
@@ -171,51 +242,18 @@ for i,atoms in enumerate(gm_tru_CO):
     E_ads[i] = (gm_tru_CO[i].get_potential_energy() - gm_tru[0].get_potential_energy() - CO.get_potential_energy() - (N_O[i])*(0.5000*O2.get_potential_energy()+Oxygen_correct))
     print(N_O[i],E_ads[i])
 # plot formation E vs No. of Oxygens
-ax.plot(N_O,E_ads,marker="o",color='#FF0000',label='E$_{f}$ of Pt$_7$O$_{(y-2)}$-CO$_3$/Al$_2$O$_3$(0001)')
+co3attached, = ax.plot(N_O,E_ads,marker="o",color='#FF0000')
 for i, nu in enumerate(N_O):
     #ax.plot(N_O[i],E_ads[i],marker="o",color=colors[i])
     ax.plot(N_O[i],E_ads[i],marker="o",color='#FF0000') 
-################################## E_chem of CO2 detached from cluster ###########################
-CO = read('CO_molecule_DFTrelaxed.traj')
-E_CO = CO.get_potential_energy()
-Pt7O4CO = read('Pt7O4CO_Al2O3_chem_CO2formonsurface_LM3DFTrelaxed.traj')
-Pt7O6CO = read('Pt7O6CO_Al2O3_Chem_CO2formonsurface_LM1DFTrelaxed.traj')
-Pt7O8CO = read('Pt7O8CO_Al2O3_Chem_CO2formonsurface_GMDFTrelaxed.traj')
-Pt7O10CO = read('Pt7O10CO_Al2O3_Chem_CO2fromonsurface_LM3DFTrelaxed.traj')
-Pt7O12CO = read('Pt7O12CO_Al2O3_Chem_CO2formonsurface_LM2DFTrelaxed.traj')
-Pt7O14CO = read('Pt7O14CO_Al2O3_Chem_CO2formonsurface_LM2DFTrelaxed.traj')
-Pt7O16CO = read('Pt7O16CO_Al2O3_Chem_CO2formonsurface_LMDFTrelaxed.traj')
-
-E_Pt7O4CO = Pt7O4CO.get_potential_energy()
-E_Pt7O6CO = Pt7O6CO.get_potential_energy()
-E_Pt7O8CO = Pt7O8CO.get_potential_energy()
-E_Pt7O10CO = Pt7O10CO.get_potential_energy()
-E_Pt7O12CO = Pt7O12CO.get_potential_energy()
-E_Pt7O14CO = Pt7O14CO.get_potential_energy()
-E_Pt7O16CO = Pt7O16CO.get_potential_energy()
-
-gm_tru_CO =[Pt7O4CO,Pt7O6CO,Pt7O8CO,Pt7O10CO,Pt7O12CO,Pt7O14CO,Pt7O16CO]
-print(gm_tru_CO[-1].get_potential_energy())
-N_O = [4,6,8,10,12,14,16]
-# color labels
-colors = {}
-color_lib =['#4daf4a','#984ea3','#999999','#fdbf6f','#ff7f00','#eeefff','#ffff33']
-for i,atoms in enumerate(gm_tru_CO):
-    colors[i] = color_lib[i]
-# cal formation energy
-E_ads =np.zeros(len(gm_tru_CO))
-for i,atoms in enumerate(gm_tru_CO):
-    E_ads[i] = (gm_tru_CO[i].get_potential_energy() - gm_tru[0].get_potential_energy() - CO.get_potential_energy() - (N_O[i])*(0.5000*O2.get_potential_energy()+Oxygen_correct))
-    print(N_O[i],E_ads[i])
-# plot formation E vs No. of Oxygens
-ax.plot(N_O,E_ads,marker="o",color='#FF00FF',label='E$_{f}$ of Pt$_7$O$_{(y-1)}$--CO$_2$/Al$_2$O$_3$(0001)')
-for i, nu in enumerate(N_O):
-    #ax.plot(N_O[i],E_ads[i],marker="o",color=colors[i])
-    ax.plot(N_O[i],E_ads[i],marker="o",color='#FF00FF')
 ##################################################################################################
+plt.legend([PtOxides,coattached,co2attached,co2detached,co3attached], ["","","","", ""],
+   handler_map={PtOxides:HandlerLineImage("Pt7Oxides_template.png"),coattached:HandlerLineImage("Pt7Oxides_template_COform.png"),co2attached:HandlerLineImage("Pt7Oxides_template_CO2form1.png"),co2detached: HandlerLineImage("Pt7Oxides_template_CO2form4.png"), co3attached: HandlerLineImage("Pt7Oxides_template_CO3form.png")},
+   handlelength=3.50, labelspacing=0.0, fontsize=40, borderpad=0.2, loc=1,
+    handletextpad=0.0, borderaxespad=0.1)
 ax.set_ylabel(r'E$_f$ (eV)')
 ax.set_xlabel(r'No. of O')
-ax.set_xticks(np.arange(0, 20, step=1))
-plt.legend()
+ax.set_xticks(np.arange(0, 22, step=1))
+#plt.legend()
 savefig('COEf_CO2Ef_CO3Ef_O2Ef_Pt7Oxides.png')
 plt.show()
