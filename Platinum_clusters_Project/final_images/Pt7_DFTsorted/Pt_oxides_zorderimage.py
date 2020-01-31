@@ -18,18 +18,18 @@ from math import atan2,pi
 import matplotlib.gridspec as gridspec
 
 
-matplotlib.rcParams['xtick.direction'] = 'out'
-matplotlib.rcParams['ytick.direction'] = 'out'
-matplotlib.rc('font',**{'family':'sans-serif',
-                        'sans-serif':['Helvetica'],
-                        'size':14})
-matplotlib.rc('text',usetex=True)
+#matplotlib.rcParams['xtick.direction'] = 'out'
+#matplotlib.rcParams['ytick.direction'] = 'out'
+#matplotlib.rc('font',**{'family':'sans-serif',
+#                        'sans-serif':['Helvetica'],
+#                        'size':14})
+#matplotlib.rc('text',usetex=True)
 
-matplotlib.rcParams['text.latex.unicode']=True
+#matplotlib.rcParams['text.latex.unicode']=False
 #matplotlib.rcParams['text.latex.preamble']=['\usepackage{bm}']
 #matplotlib.rcParams['text.latex.preamble']=['\usepackage{xfrac}']
-matplotlib.rcParams['mathtext.default'] = 'regular'
-matplotlib.rcParams['ps.usedistiller'] = 'xpdf'
+#matplotlib.rcParams['mathtext.default'] = 'regular'
+#matplotlib.rcParams['ps.usedistiller'] = 'xpdf'
 
 matplotlib.rc('xtick', labelsize=14)
 matplotlib.rc('ytick', labelsize=14)
@@ -90,10 +90,15 @@ def plot_conf(ax, atoms, rot=False):
     plot_atoms(ax, atoms, [0,2,1], colors, alp, z=-1)
 
 
+
 data=read(sys.argv[1]+'@:')
+energydif =np.zeros(len(data))
+for j in range(len(data)):
+    GM_energy = data[0].get_potential_energy()
+    energydif[j] = (data[j].get_potential_energy() - GM_energy)
 
 for j in range(len(data)):
-    image = data[j] #* (2,2,1) 
+    image = data[j] #* (2,2,1)
     for i,a in enumerate(image):
         if i ==48 and image.positions[i,1]>8.0 :
             image.positions[i,1] =image.positions[i,1]-12.429
@@ -116,8 +121,8 @@ for j in range(len(data)):
     
     #write('newimage.traj',image)
     
-    plt.figure(figsize=(6.0,7.0))
-    
+    plt.figure(figsize=(4.0,5.0))
+   # ax= 'ax'.format(j) 
     gs = gridspec.GridSpec(2, 1,
                            height_ratios=[6.86,10.32])
     
@@ -146,13 +151,15 @@ for j in range(len(data)):
     
     ax.set_xlim([-6.2, 10.50])
     ax.set_ylim([0.0, 14.0])
+    name ='$\Delta E = {}$ eV'.format(round(energydif[j],3))
+    ax.text(0.3, -0.1, name, transform=ax.transAxes,fontsize=20)
     ax.set_yticks([])
     ax.set_xticks([])
     ax.set(aspect=1)
     
     gs.update(wspace=0.00,hspace=0.00)
     plt.tight_layout()
-    name =sys.argv[2]
+    name = sys.argv[2]
     name =name+'_{}'.format(j)
     savefig(name,bbox_inches='tight')
     #show()
