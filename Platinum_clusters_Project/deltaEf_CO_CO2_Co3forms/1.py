@@ -80,18 +80,19 @@ Pt7OxCO2 = np.array(Pt7OxCO2)
 # chemisorption of CO3 molecule form on within cluster
 Pt7OxCO3=[[2, -5.043113192502336],
 [4,-7.856083072271016],
-[6, -9.387412271531389],
-[8, -11.208205733651717],
-[10, -12.52795522340297],
+[6, -10.027315642220287],
+[8, -12.220162775978629],
+[10, -13.758214656971987],
 [12, -14.14148595635477],
 [14, -14.839032212283911],
 [16, -13.057021308935617]]
 Pt7OxCO3=np.array(Pt7OxCO3)
-# chemisorption of CO2 dettached from cluster 
-Pt7OxCO2detached=[[4, -8.091406898979184],
+# chemisorption of CO2 dettached from cluster
+Pt7OxCO2detached=[[2, -4.021476501459336],
+[4, -8.091406898979184],
 [6, -10.461499640039165],
-[8, -11.783901333699482],
-[10, -12.165900048601216],
+[8, -11.878007574710814],
+[10, -13.376545594653308],
 [12, -13.622882709995864],
 [14, -13.94218304733343],
 [16, -12.45595536962648]]
@@ -129,18 +130,17 @@ for i in range(len(Pt7OxCO2)):
     ax.plot(Pt7OxCO2[i,0],delta_E_f_CO2[i],marker="o",color='#8EBA42')
 ############################### CO2 detached #####################################################
 colors = {}
-color_lib = ['#4daf4a','#984ea3','#999999','#fdbf6f', '#ff7f00','#eeefff','#ffff33']
+color_lib = ['#377eb8','#4daf4a','#984ea3','#999999','#fdbf6f', '#ff7f00','#eeefff','#ffff33']
 for i,atoms in enumerate(Pt7OxCO2detached):
     colors[i] = color_lib[i]
-delta_E_f_CO3 =np.zeros(len(Pt7OxCO2detached))
+delta_E_f_CO2detached =np.zeros(len(Pt7OxCO2detached))
 for i in range(len(Pt7OxCO2detached)):
-    delta_E_f_CO3[i] =(Pt7OxCO2detached[i,1]-Pt7Ox[i+2,1])
-    print(Pt7OxCO2detached[i,0],delta_E_f_CO3[i])
+    delta_E_f_CO2detached[i] =(Pt7OxCO2detached[i,1]-Pt7Ox[i+1,1])
+    print(Pt7OxCO2detached[i,0],delta_E_f_CO2detached[i])
 # plot formation E vs No. of Oxygens
-#ax.plot(Pt7OxCO2detached[:,0],delta_E_f_CO3,marker="o",color='#FF00FF',label='Pt$_7$O$_{(y-1)}--$CO$_2$')
-co2detached, = plt.plot(Pt7OxCO2detached[:,0],delta_E_f_CO3,marker="o",color='#FF00FF')
+co2detached, = plt.plot(Pt7OxCO2detached[:,0],delta_E_f_CO2detached,marker="o",color='#FF00FF')
 for i in range(len(Pt7OxCO2detached)):
-    ax.plot(Pt7OxCO2detached[i,0],delta_E_f_CO3[i],marker="o",color='#FF00FF')
+    ax.plot(Pt7OxCO2detached[i,0],delta_E_f_CO2detached[i],marker="o",color='#FF00FF')
 ######################## CO3 attached ############################################################
 colors = {}
 color_lib = ['#377eb8','#4daf4a','#984ea3','#999999','#fdbf6f', '#ff7f00','#eeefff','#ffff33']
