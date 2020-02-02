@@ -4,13 +4,13 @@ import matplotlib
 #from plot_neb_tio2 import *
 from matplotlib.offsetbox import TextArea, VPacker, AnnotationBbox
 import matplotlib.patches as patches
-
+from math import ceil, floor
 import matplotlib.pyplot as plt
 from ase.io import read, write
 from ase.visualize import view
 import matplotlib.patches as mpatches
 from ase.data.colors import jmol_colors
-
+from decimal import Decimal 
 from pylab import *
 from ase.data import covalent_radii as aradii
 from matplotlib.patches import Circle
@@ -63,21 +63,26 @@ def plot_atoms(ax, atoms, xyz, acols, alp, z):
 
 
 
-def plot_conf(ax, atoms, rot=False):
+def plot_conf(ax, atoms, colorlenth,rot=False):
     colors = np.array([jmol_colors[atom.number] for atom in atoms])
+    positions =atoms.get_positions()
     for i, atom in enumerate(atoms):
         if (atom.number ==78):
            colors[i] =[0.1, 0.6, 0.6]
         if (atom.number ==6):
            colors[i] =[0.1, 0.2, 0.9]
-        if (atom.number ==8 and i >= 135 and i <=146 ):
+        if (atom.number ==8 and positions[i,2]>12.2):
            colors[i] =[102/255, 0/255, 0/255]
-        if (atom.number ==8 and i >= 281 and i <=292 ):
-           colors[i] =[102/255, 0/255, 0/255]
-        if (atom.number ==8 and i >= 427 and i <=438 ):
-           colors[i] =[102/255, 0/255, 0/255]
-        if (atom.number ==8 and i >= 573 and i <=584 ):
-           colors[i] =[102/255, 0/255, 0/255]
+     #   if (atom.number ==8 and i >=colorlenth*5-8):
+     #      colors[i] =[102/255, 0/255, 0/255]
+       # if (atom.number ==8 and i >= 135+colorlenth*2 and i <colorlenth*3 ):
+       #    colors[i] =[102/255, 0/255, 0/255]
+       # if (atom.number ==8 and i >= 135+colorlenth*3 and i <colorlenth*4 ):
+       #    colors[i] =[102/255, 0/255, 0/255]
+      #  if (atom.number ==8 and i >= 135+colorlenth*4 and i <colorlenth*5 ):
+      #     colors[i] =[102/255, 0/255, 0/255]
+      #  if (atom.number ==8 and i >= 135+colorlenth*5 and i <colorlenth*6 ):
+      #     colors[i] =[102/255, 0/255, 0/255]
 
     alp = [None] * colors.shape[0]
     for i,a in enumerate(atoms):
@@ -96,45 +101,39 @@ energydif =np.zeros(len(data))
 for j in range(len(data)):
     GM_energy = data[0].get_potential_energy()
     energydif[j] = (data[j].get_potential_energy() - GM_energy)
-
-for j in range(0,30):
-    image = data[j] #* (2,2,1)
-    for i,a in enumerate(image):
-        if i ==48 and image.positions[i,1]>8.0 :
-            image.positions[i,1] =image.positions[i,1]-12.429
-            image.positions[i,0] =image.positions[i,0]+7.176
-        if i ==93 and image.positions[i,1]>8.0 :
-            image.positions[i,1] =image.positions[i,1]-12.429
-            image.positions[i,0] =image.positions[i,0]+7.176
-        if i ==3  and image.positions[i,1]>8.0 :
-            image.positions[i,1] =image.positions[i,1]-12.429
-            image.positions[i,0] =image.positions[i,0]+7.176
-        #if i ==143:
-        #    image.positions[i,1] =image.positions[i,1]+12.429
-        #    image.positions[i,0] =image.positions[i,0]-7.176
-        #if i ==142:
-        #    image.positions[i,1] =image.positions[i,1]+12.429
-        #    image.positions[i,0] =image.positions[i,0]-7.176
-
-        if a.position[0] >7.100 and i<=151:
-           image.positions[i,0] =image.positions[i,0]-14.352
-    
-    #write('newimage.traj',image)
-    
+    #print('{:3.3f}'.format(energydif[j]))
+for j in range(18,len(data)):
+    atoms = data[j]
+    colorlenth = len(atoms)
+    atoms =atoms*(3,3,1)
+    print(colorlenth)
+   # write('newimage.traj',atoms)
+    #exit()
+    a=atoms
+    del atoms[[atom.index for atom in atoms if atom.index <=colorlenth*5-8 or atom.index >=colorlenth*5]]
+    #view(atoms)
+    centreofmass = a.get_center_of_mass()
+    atoms = data[j]*(3,3,1)
+    a=atoms
+    del atoms[atoms.positions[:,0] >=centreofmass[0]+9.0]
+    del atoms[atoms.positions[:,0] <= centreofmass[0]-9.0]
+    del atoms[atoms.positions[:,1] >= centreofmass[1]+7.0]
+    del atoms[atoms.positions[:,1] <= centreofmass[1]-9.5]
+  
+    colorlenth = len(atoms) 
+    #view(atoms)
+    #exit() 
     plt.figure(figsize=(4.0,5.0))
-   # ax= 'ax'.format(j) 
     gs = gridspec.GridSpec(2, 1,
-                           height_ratios=[6.86,10.32])
+                           height_ratios=[6.86,11.4])
     
-    cell = image.get_cell()
-    
+    cell = atoms.get_cell()
     # 0 0
     ax = plt.subplot(gs[0, 0])
-    image = image * (2,1,1)
-    img = image.copy()
-    plot_conf(ax, img)
+    img = atoms.copy()
+    plot_conf(ax, img,colorlenth)
     
-    ax.set_xlim([-6.2, 10.5])
+    ax.set_xlim([centreofmass[0]-8.0, centreofmass[0]+8.0])
     ax.set_ylim([10.7, 20.0])
     ax.set_yticks([])
     ax.set_xticks([])
@@ -142,17 +141,15 @@ for j in range(0,30):
     
     # 0 1                                                                                                                          
     ax = plt.subplot(gs[1, 0])
-    image = image * (1,2,1)
-    write('newimage.traj',image)
+    cell = atoms.get_cell()
+    img = atoms.copy()
+    plot_conf(ax, img,colorlenth, rot=True)
     
-    cell = image.get_cell()
-    img = image.copy()
-    plot_conf(ax, img, rot=True)
-    
-    ax.set_xlim([-6.2, 10.50])
-    ax.set_ylim([0.0, 14.0])
-    name ='$\Delta E = {}$ eV'.format(round(energydif[j],3))
-    ax.text(0.3, -0.1, name, transform=ax.transAxes,fontsize=20)
+    ax.set_xlim([centreofmass[0]-8.0, centreofmass[0]+8.0])
+    ax.set_ylim([centreofmass[1]-9.0, centreofmass[1]+6.5])
+    #name ='$\Delta E = {}$ eV'.format(math.ceil(energydif[j],3))
+    name ='$\Delta E = {:3.3f}$ eV'.format(energydif[j])
+    ax.text(0.1, -0.1, name, transform=ax.transAxes,fontsize=20)
     ax.set_yticks([])
     ax.set_xticks([])
     ax.set(aspect=1)
@@ -162,5 +159,5 @@ for j in range(0,30):
     name = sys.argv[2]
     name =name+'_{}'.format(j)
     savefig(name,bbox_inches='tight')
-    #show()
-    #exit()
+    show()
+    exit()
