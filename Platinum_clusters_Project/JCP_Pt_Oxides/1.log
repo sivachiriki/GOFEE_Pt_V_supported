@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.28)  20 JAN 2020 18:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.28)  4 FEB 2020 15:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -182,55 +182,55 @@ File: Pt7_Al2O3_Lowlying_DFTrelxed_0.png Graphic file (type png)
 <use Pt7_Al2O3_Lowlying_DFTrelxed_0.png>
 Package pdftex.def Info: Pt7_Al2O3_Lowlying_DFTrelxed_0.png  used on input line
  14.
-(pdftex.def)             Requested size: 86.72377pt x 127.5311pt.
+(pdftex.def)             Requested size: 36.135pt x 53.1349pt.
 <Pt7_Al2O3_Lowlying_DFTrelxed_1.png, id=3, 232.7094pt x 343.2825pt>
 File: Pt7_Al2O3_Lowlying_DFTrelxed_1.png Graphic file (type png)
 <use Pt7_Al2O3_Lowlying_DFTrelxed_1.png>
 Package pdftex.def Info: Pt7_Al2O3_Lowlying_DFTrelxed_1.png  used on input line
  18.
-(pdftex.def)             Requested size: 86.72377pt x 127.92918pt.
+(pdftex.def)             Requested size: 36.135pt x 53.30252pt.
 <Pt7_Al2O3_Lowlying_DFTrelxed_2.png, id=4, 234.1548pt x 343.2825pt>
 File: Pt7_Al2O3_Lowlying_DFTrelxed_2.png Graphic file (type png)
 <use Pt7_Al2O3_Lowlying_DFTrelxed_2.png>
 Package pdftex.def Info: Pt7_Al2O3_Lowlying_DFTrelxed_2.png  used on input line
  22.
-(pdftex.def)             Requested size: 86.72377pt x 127.14348pt.
+(pdftex.def)             Requested size: 36.135pt x 52.97252pt.
 <Pt7_Al2O3_Lowlying_DFTrelxed_3.png, id=5, 234.8775pt x 344.0052pt>
 File: Pt7_Al2O3_Lowlying_DFTrelxed_3.png Graphic file (type png)
 <use Pt7_Al2O3_Lowlying_DFTrelxed_3.png>
 Package pdftex.def Info: Pt7_Al2O3_Lowlying_DFTrelxed_3.png  used on input line
  26.
-(pdftex.def)             Requested size: 86.72377pt x 127.01747pt.
+(pdftex.def)             Requested size: 36.135pt x 52.92131pt.
 <Pt7_Al2O3_Lowlying_DFTrelxed_5.png, id=6, 236.3229pt x 343.2825pt>
 File: Pt7_Al2O3_Lowlying_DFTrelxed_5.png Graphic file (type png)
 <use Pt7_Al2O3_Lowlying_DFTrelxed_5.png>
 Package pdftex.def Info: Pt7_Al2O3_Lowlying_DFTrelxed_5.png  used on input line
  30.
-(pdftex.def)             Requested size: 86.72377pt x 125.97539pt.
+(pdftex.def)             Requested size: 36.135pt x 52.48538pt.
 <Pt7_Al2O3_Lowlying_DFTrelxed_6.png, id=7, 234.8775pt x 344.0052pt>
 File: Pt7_Al2O3_Lowlying_DFTrelxed_6.png Graphic file (type png)
 <use Pt7_Al2O3_Lowlying_DFTrelxed_6.png>
 Package pdftex.def Info: Pt7_Al2O3_Lowlying_DFTrelxed_6.png  used on input line
  34.
-(pdftex.def)             Requested size: 86.72377pt x 127.01747pt.
+(pdftex.def)             Requested size: 36.135pt x 52.92131pt.
 <Pt7_Al2O3_Lowlying_DFTrelxed_7.png, id=8, 234.8775pt x 343.2825pt>
 File: Pt7_Al2O3_Lowlying_DFTrelxed_7.png Graphic file (type png)
 <use Pt7_Al2O3_Lowlying_DFTrelxed_7.png>
 Package pdftex.def Info: Pt7_Al2O3_Lowlying_DFTrelxed_7.png  used on input line
  38.
-(pdftex.def)             Requested size: 86.72377pt x 126.75063pt.
+(pdftex.def)             Requested size: 36.135pt x 52.81013pt.
 <Pt7_Al2O3_Lowlying_DFTrelxed_8.png, id=9, 234.8775pt x 342.5598pt>
 File: Pt7_Al2O3_Lowlying_DFTrelxed_8.png Graphic file (type png)
 <use Pt7_Al2O3_Lowlying_DFTrelxed_8.png>
 Package pdftex.def Info: Pt7_Al2O3_Lowlying_DFTrelxed_8.png  used on input line
  42.
-(pdftex.def)             Requested size: 86.72377pt x 126.48378pt.
+(pdftex.def)             Requested size: 36.135pt x 52.69896pt.
 <Pt7_Al2O3_Lowlying_DFTrelxed_9.png, id=10, 234.1548pt x 343.2825pt>
 File: Pt7_Al2O3_Lowlying_DFTrelxed_9.png Graphic file (type png)
 <use Pt7_Al2O3_Lowlying_DFTrelxed_9.png>
 Package pdftex.def Info: Pt7_Al2O3_Lowlying_DFTrelxed_9.png  used on input line
  46.
-(pdftex.def)             Requested size: 86.72377pt x 127.14348pt.
+(pdftex.def)             Requested size: 36.135pt x 52.97252pt.
 
 [1
 
@@ -251,7 +251,7 @@ Here is how much of TeX's memory you used:
 </usr/local/texlive/2018/texmf-dist/font
 s/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2018/texmf-dist/fonts
 /type1/public/amsfonts/cm/cmr10.pfb>
-Output written on 1.pdf (1 page, 520663 bytes).
+Output written on 1.pdf (1 page, 520659 bytes).
 PDF statistics:
  35 PDF objects out of 1000 (max. 8388607)
  11 compressed objects within 1 object stream
