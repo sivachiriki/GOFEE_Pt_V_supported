@@ -17,20 +17,6 @@ from matplotlib.patches import Circle
 from math import atan2,pi
 import matplotlib.gridspec as gridspec
 
-
-#matplotlib.rcParams['xtick.direction'] = 'out'
-#matplotlib.rcParams['ytick.direction'] = 'out'
-#matplotlib.rc('font',**{'family':'sans-serif',
-#                        'sans-serif':['Helvetica'],
-#                        'size':14})
-#matplotlib.rc('text',usetex=True)
-
-#matplotlib.rcParams['text.latex.unicode']=False
-#matplotlib.rcParams['text.latex.preamble']=['\usepackage{bm}']
-#matplotlib.rcParams['text.latex.preamble']=['\usepackage{xfrac}']
-#matplotlib.rcParams['mathtext.default'] = 'regular'
-#matplotlib.rcParams['ps.usedistiller'] = 'xpdf'
-
 matplotlib.rc('xtick', labelsize=14)
 matplotlib.rc('ytick', labelsize=14)
 
@@ -70,7 +56,7 @@ def plot_conf(ax, atoms, colorlenth,rot=False):
            colors[i] =[0.0, 0.0, 0.0]
         if (atom.number ==8 and positions[i,2]>12.2):
            colors[i] =[128/255, 0/255, 128/255]
-          # colors[i] =[0.0, 128/255,0.0]
+           #colors[i] =[0.0, 128/255,0.0]
      #   if (atom.number ==8 and i >=colorlenth*5-8):
      #      colors[i] =[102/255, 0/255, 0/255]
        # if (atom.number ==8 and i >= 135+colorlenth*2 and i <colorlenth*3 ):
@@ -95,6 +81,8 @@ def plot_conf(ax, atoms, colorlenth,rot=False):
 #-----------------------------------------------------------#
 fig = plt.figure(figsize=(13.0,10.50))
 outer = gridspec.GridSpec(4, 9, wspace=0.04, hspace=0.2)
+
+color_lib = ['#00FF00','#377eb8','#4daf4a','#00FFFF','#a65628','#FF0000','#0000FF', '#FF00FF','#FFFF00','#000000']
 #---------------------- Pt7 clusters -------------------------------------#
 data=read(sys.argv[1]+'@:')
 energydif =np.zeros(len(data))
@@ -138,6 +126,21 @@ for j in range(0,len(data)):
        name2 ='Pt$_7$ Lowest Isomers'
        ax.set_title(name2)
 
+    #----------------- drawing box -------------------------------#
+    xlim = ax.get_xlim()
+    ylim = ax.get_ylim()
+    #print(xlim)
+    #print(ylim)
+    box_x = [xlim[0], xlim[1], xlim[1], xlim[0], xlim[0]]
+    box_y =[ylim[0], ylim[0], ylim[1], ylim[1], ylim[0]]
+    ax.add_patch(
+        patches.Rectangle(
+           (box_x[0],box_y[0]),
+           xlim[1]-xlim[0],
+           ylim[1]-ylim[0],
+           fill=True,facecolor='white', clip_on=False,zorder =0.8) )
+    ax.plot(box_x, box_y, color=color_lib[j],linewidth=5.0)
+
     # 0 1                                                                                                                          
     ax = plt.Subplot(fig, inner[1])
     cell = atoms.get_cell()
@@ -153,6 +156,21 @@ for j in range(0,len(data)):
     ax.set_yticks([])
     ax.set_xticks([])
     ax.set(aspect=1)
+    #----------------- drawing box -------------------------------#
+    xlim = ax.get_xlim()
+    ylim = ax.get_ylim()
+    #print(xlim)
+    #print(ylim)
+    box_x = [xlim[0], xlim[1], xlim[1], xlim[0], xlim[0]]
+    box_y =[ylim[0], ylim[0], ylim[1], ylim[1], ylim[0]]
+    ax.add_patch(
+        patches.Rectangle(
+           (box_x[0],box_y[0]),
+           xlim[1]-xlim[0],
+           ylim[1]-ylim[0],
+           fill=True,facecolor='white', clip_on=False,zorder =0.8) )
+    ax.plot(box_x, box_y, color=color_lib[j],linewidth=5.0)
+
     fig.add_subplot(ax)
 #-------------------------- Pt7CO clusters ----------------------#
 data=read(sys.argv[2]+'@:')
@@ -196,6 +214,40 @@ for j in range(0,len(data)):
     if (j ==0):
        name2 ='Pt$_7$CO Lowest Isomers'
        ax.set_title(name2) 
+    #----------------- drawing box -------------------------------#
+    if (j ==0 or j ==5 or j ==20):
+       color= color_lib[0]
+    if (j ==8 or j ==11 or j ==13 or j ==16 or j ==17 or j ==18):
+       color= color_lib[1]
+    if (j ==1 or j ==6 or j ==19 or j ==21):
+       color= color_lib[2]
+    if (j ==15 or j ==19):
+       color= color_lib[3]
+    if (j ==12 or j ==22):
+       color= color_lib[4]
+    if (j ==9 or j ==14 or j ==23):
+       color= color_lib[5]
+    if (j ==2 or j ==3):
+       color= color_lib[6]
+    if (j ==7 or j ==10):
+       color= color_lib[7]
+    if (j ==4):
+       color= color_lib[8]
+    if (j ==24):
+       color= color_lib[9]
+    xlim = ax.get_xlim()
+    ylim = ax.get_ylim()
+    #print(xlim)
+    #print(ylim)
+    box_x = [xlim[0], xlim[1], xlim[1], xlim[0], xlim[0]]
+    box_y =[ylim[0], ylim[0], ylim[1], ylim[1], ylim[0]]
+    ax.add_patch(
+        patches.Rectangle(
+           (box_x[0],box_y[0]),
+           xlim[1]-xlim[0],
+           ylim[1]-ylim[0],
+           fill=True,facecolor='white', clip_on=False,zorder =0.8) )
+    ax.plot(box_x, box_y, color=color,linewidth=5.0)
     # 0 1                                                                                                                          
     ax = plt.Subplot(fig, inner[1])
     cell = atoms.get_cell()
@@ -211,235 +263,23 @@ for j in range(0,len(data)):
     ax.set_yticks([])
     ax.set_xticks([])
     ax.set(aspect=1)
+    #----------------- drawing box -------------------------------#
+    xlim = ax.get_xlim()
+    ylim = ax.get_ylim()
+    #print(xlim)
+    #print(ylim)
+    box_x = [xlim[0], xlim[1], xlim[1], xlim[0], xlim[0]]
+    box_y =[ylim[0], ylim[0], ylim[1], ylim[1], ylim[0]]
+    ax.add_patch(
+        patches.Rectangle(
+           (box_x[0],box_y[0]),
+           xlim[1]-xlim[0],
+           ylim[1]-ylim[0],
+           fill=True,facecolor='white', clip_on=False,zorder =0.8) )
+    ax.plot(box_x, box_y, color=color,linewidth=5.0)
     fig.add_subplot(ax)
 
-#------------------------- S1 sites --------------------------------#
-data=read(sys.argv[3]+'@:')
-energydif =np.zeros(len(data))
-for j in range(len(data)):
-    energydif[j] = (data[j].get_potential_energy() - GM_energy)
-for j in range(0,len(data)):
-    #-----------------------------------------------------------#
-    inner = gridspec.GridSpecFromSubplotSpec(2, 1,subplot_spec=outer[j+18], wspace=0.00, hspace=0.00, height_ratios=[6.86,9.9])
-    atoms = data[j]
-    colorlenth = len(atoms)
-    atoms =atoms*(3,3,1)
-    print(colorlenth)
-   # write('newimage.traj',atoms)
-    a=atoms
-    del atoms[[atom.index for atom in atoms if atom.index <=colorlenth*5-10 or atom.index >=colorlenth*5]]
-    #view(atoms)
-    centreofmass = a.get_center_of_mass()
-    atoms = data[j]*(3,3,1)
-    a=atoms
-    del atoms[atoms.positions[:,0] >=centreofmass[0]+8.10]
-    del atoms[atoms.positions[:,0] <= centreofmass[0]-8.10]
-    del atoms[atoms.positions[:,1] >= centreofmass[1]+7.8]
-    del atoms[atoms.positions[:,1] <= centreofmass[1]-7.10]
-
-    colorlenth = len(atoms)
-    #view(atoms)
-    cell = atoms.get_cell()
-    # 0 0
-    ax = plt.Subplot(fig, inner[0])
-    img = atoms.copy()
-    plot_conf(ax, img,colorlenth)
-
-    ax.set_xlim([centreofmass[0]-7.50, centreofmass[0]+7.50])
-    ax.set_ylim([10.7, 20.0])
-    ax.set_yticks([])
-    ax.set_xticks([])
-    ax.set(aspect=1)
-    fig.add_subplot(ax)
-    # 0 1                                                                                                                          
-    ax = plt.Subplot(fig, inner[1])
-    cell = atoms.get_cell()
-    img = atoms.copy()
-    plot_conf(ax, img,colorlenth, rot=True)
-
-    ax.set_xlim([centreofmass[0]-7.5, centreofmass[0]+7.50])
-    ax.set_ylim([centreofmass[1]-6.5, centreofmass[1]+7.0])
-    name ='$\Delta E = {:3.3f}$ eV'.format(energydif[j])
-    ax.text(0.05, -0.14, name, transform=ax.transAxes,fontsize=10)
-    name1 = "DAS (S$_1$)"
-    ax.text(0.05, 1.6, name1, transform=ax.transAxes,fontsize=9)
-    ax.set_yticks([])
-    ax.set_xticks([])
-    ax.set(aspect=1)
-    fig.add_subplot(ax)
-#------------------------- S2 sites --------------------------------#
-data=read(sys.argv[4]+'@:')
-energydif =np.zeros(len(data))
-for j in range(len(data)):
-    energydif[j] = (data[j].get_potential_energy() - GM_energy)
-for j in range(0,len(data)):
-    #-----------------------------------------------------------#
-    inner = gridspec.GridSpecFromSubplotSpec(2, 1,subplot_spec=outer[j+20], wspace=0.00, hspace=0.00, height_ratios=[6.86,9.9])
-    atoms = data[j]
-    colorlenth = len(atoms)
-    atoms =atoms*(3,3,1)
-    print(colorlenth)
-   # write('newimage.traj',atoms)
-    a=atoms
-    del atoms[[atom.index for atom in atoms if atom.index <=colorlenth*5-10 or atom.index >=colorlenth*5]]
-    #view(atoms)
-    centreofmass = a.get_center_of_mass()
-    atoms = data[j]*(3,3,1)
-    a=atoms
-    del atoms[atoms.positions[:,0] >=centreofmass[0]+8.10]
-    del atoms[atoms.positions[:,0] <= centreofmass[0]-8.10]
-    del atoms[atoms.positions[:,1] >= centreofmass[1]+7.8]
-    del atoms[atoms.positions[:,1] <= centreofmass[1]-7.10]
-
-    colorlenth = len(atoms)
-    #view(atoms)
-    cell = atoms.get_cell()
-    # 0 0
-    ax = plt.Subplot(fig, inner[0])
-    img = atoms.copy()
-    plot_conf(ax, img,colorlenth)
-
-    ax.set_xlim([centreofmass[0]-7.50, centreofmass[0]+7.50])
-    ax.set_ylim([10.7, 20.0])
-    ax.set_yticks([])
-    ax.set_xticks([])
-    ax.set(aspect=1)
-    fig.add_subplot(ax)
-    # 0 1                                                                                                                          
-    ax = plt.Subplot(fig, inner[1])
-    cell = atoms.get_cell()
-    img = atoms.copy()
-    plot_conf(ax, img,colorlenth, rot=True)
-
-    ax.set_xlim([centreofmass[0]-7.5, centreofmass[0]+7.50])
-    ax.set_ylim([centreofmass[1]-6.5, centreofmass[1]+7.0])
-    name ='$\Delta E = {:3.3f}$ eV'.format(energydif[j])
-    ax.text(0.05, -0.14, name, transform=ax.transAxes,fontsize=10)
-    name1 = "DAS (S$_2$)"
-    ax.text(0.05, 1.6, name1, transform=ax.transAxes,fontsize=9)
-    ax.set_yticks([])
-    ax.set_xticks([])
-    ax.set(aspect=1)
-    fig.add_subplot(ax) 
-
-#------------------------- S3 to S6 sites --------------------------------#
-data=read(sys.argv[5]+'@:')
-energydif =np.zeros(len(data))
-for j in range(len(data)):
-    energydif[j] = (data[j].get_potential_energy() - GM_energy)
-for j in range(0,len(data)):
-    #-----------------------------------------------------------#
-    inner = gridspec.GridSpecFromSubplotSpec(2, 1,subplot_spec=outer[j+22], wspace=0.00, hspace=0.00, height_ratios=[6.86,9.9])
-    atoms = data[j]
-    colorlenth = len(atoms)
-    atoms =atoms*(3,3,1)
-    print(colorlenth)
-   # write('newimage.traj',atoms)
-    a=atoms
-    del atoms[[atom.index for atom in atoms if atom.index <=colorlenth*5-10 or atom.index >=colorlenth*5]]
-    #view(atoms)
-    centreofmass = a.get_center_of_mass()
-    atoms = data[j]*(3,3,1)
-    a=atoms
-    del atoms[atoms.positions[:,0] >=centreofmass[0]+8.10]
-    del atoms[atoms.positions[:,0] <= centreofmass[0]-8.10]
-    del atoms[atoms.positions[:,1] >= centreofmass[1]+7.8]
-    del atoms[atoms.positions[:,1] <= centreofmass[1]-7.10]
-
-    colorlenth = len(atoms)
-    #view(atoms)
-    cell = atoms.get_cell()
-    # 0 0
-    ax = plt.Subplot(fig, inner[0])
-    img = atoms.copy()
-    plot_conf(ax, img,colorlenth)
-
-    ax.set_xlim([centreofmass[0]-7.50, centreofmass[0]+7.50])
-    ax.set_ylim([10.7, 20.0])
-    ax.set_yticks([])
-    ax.set_xticks([])
-    ax.set(aspect=1)
-    fig.add_subplot(ax)
-    # 0 1                                                                                                                          
-    ax = plt.Subplot(fig, inner[1])
-    cell = atoms.get_cell()
-    img = atoms.copy()
-    plot_conf(ax, img,colorlenth, rot=True)
-
-    ax.set_xlim([centreofmass[0]-7.5, centreofmass[0]+7.50])
-    ax.set_ylim([centreofmass[1]-6.5, centreofmass[1]+7.0])
-    name ='$\Delta E = {:3.3f}$ eV'.format(energydif[j])
-    ax.text(0.05, -0.14, name, transform=ax.transAxes,fontsize=10)
-    if (j==0):
-       name1 = "DAS (S$_3$)"
-    if (j==1):
-       name1 = "DAS (S$_5$)"
-    if (j != 0 and j != 1):
-        name1 = "DAS (S$_6$)"
-    ax.text(0.05, 1.6, name1, transform=ax.transAxes,fontsize=9)
-    ax.set_yticks([])
-    ax.set_xticks([])
-    ax.set(aspect=1)
-    fig.add_subplot(ax)
-
-#------------------------- S7 to S9 sites --------------------------------#
-data=read(sys.argv[6]+'@:')
-energydif =np.zeros(len(data))
-for j in range(len(data)):
-    energydif[j] = (data[j].get_potential_energy() - GM_energy)
-for j in range(0,len(data)):
-    #-----------------------------------------------------------#
-    inner = gridspec.GridSpecFromSubplotSpec(2, 1,subplot_spec=outer[j+29], wspace=0.00, hspace=0.00, height_ratios=[6.86,9.9])
-    atoms = data[j]
-    colorlenth = len(atoms)
-    atoms =atoms*(3,3,1)
-    print(colorlenth)
-   # write('newimage.traj',atoms)
-    a=atoms
-    del atoms[[atom.index for atom in atoms if atom.index <=colorlenth*5-10 or atom.index >=colorlenth*5]]
-    #view(atoms)
-    centreofmass = a.get_center_of_mass()
-    atoms = data[j]*(3,3,1)
-    a=atoms
-    del atoms[atoms.positions[:,0] >=centreofmass[0]+8.10]
-    del atoms[atoms.positions[:,0] <= centreofmass[0]-8.10]
-    del atoms[atoms.positions[:,1] >= centreofmass[1]+7.8]
-    del atoms[atoms.positions[:,1] <= centreofmass[1]-7.10]
-
-    colorlenth = len(atoms)
-    #view(atoms)
-    cell = atoms.get_cell()
-    # 0 0
-    ax = plt.Subplot(fig, inner[0])
-    img = atoms.copy()
-    plot_conf(ax, img,colorlenth)
-
-    ax.set_xlim([centreofmass[0]-7.50, centreofmass[0]+7.50])
-    ax.set_ylim([10.7, 20.0])
-    ax.set_yticks([])
-    ax.set_xticks([])
-    ax.set(aspect=1)
-    fig.add_subplot(ax)
-    # 0 1                                                                                                                          
-    ax = plt.Subplot(fig, inner[1])
-    cell = atoms.get_cell()
-    img = atoms.copy()
-    plot_conf(ax, img,colorlenth, rot=True)
-
-    ax.set_xlim([centreofmass[0]-7.5, centreofmass[0]+7.50])
-    ax.set_ylim([centreofmass[1]-6.5, centreofmass[1]+7.0])
-    name ='$\Delta E = {:3.3f}$ eV'.format(energydif[j])
-    ax.text(0.05, -0.14, name, transform=ax.transAxes,fontsize=10)
-    if (j==0 or j==1):
-       name1 = "DAS (S$_7$)"
-    else:
-        name1 = "DAS (S$_8$)"
-    ax.text(0.05, 1.6, name1, transform=ax.transAxes,fontsize=9)
-    ax.set_yticks([])
-    ax.set_xticks([])
-    ax.set(aspect=1)
-    fig.add_subplot(ax) 
-name = sys.argv[7]
+name = sys.argv[3]
 name =name
 savefig(name,bbox_inches='tight')
 show()
