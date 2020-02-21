@@ -25,8 +25,8 @@ import ase.parallel as mpi
 world = mpi.world
 
 data1=read('Pt7O3_Al2O3_KRRfund9l_DFTrelaxedsorted.traj@:')
-traj = Trajectory('Pt7O3_Al2O3_KRRfund9l_DFTrelaxedsorted.traj','w')
-numbers =[0,2,3,7,8,9,11]
+traj = Trajectory('Pt7O3_Al2O3_KRRfund9l_DFTrelaxedsorted1.traj','w')
+numbers =[0,3,4,5,6,7,9,13,15,16,17,18,]
 for a,j in enumerate(numbers):
 #for j in range(len(data1)):
 #    if (j != 14):

@@ -77,10 +77,10 @@ for j in range(len(data)):
     energydif[j] = (data[j].get_potential_energy() - GM_energy)
     plt.plot(j,energydif[j])
     print(j,energydif[j])
-plt.xlim([0,9.0])
-plt.ylim([-3.0,1.0])
+plt.xlim([0,7.0])
+plt.ylim([-3.10,1.0])
 #plt.margins(x=0.5, y=0.05)
-plt.xlabel('Lowest Isomer found with GOFEE')
+plt.xlabel('Lowest Isomer found for Pt$_7$ and Pt$_7$CO with GOFEE')
 plt.ylabel('Stability of Isomers (eV)')
 #plt.show()
 #exit()
@@ -109,9 +109,9 @@ for j in range(0,len(data)):
    
     # 0 0
     dy = (inverse((1, 0)) - inverse((1, -0.1)))[1]
-    xy = transform((j+1, energydif[j]))
+    xy = transform((j, energydif[j]))
     print(dy, xy)
-    ax = plt.axes([xy[0], xy[1]+(dy)/21.50, 0.10, 0.10])
+    ax = plt.axes([xy[0], xy[1]-(dy)/50.50, 0.10, 0.10])
     img = atoms.copy()
     plot_conf(ax, img,colorlenth)
 
@@ -139,10 +139,10 @@ for j in range(0,len(data)):
     dy = (inverse((1, 0)) - inverse((1, -0.1)))[1]
     #dy = (transform.inverted()((1, 0)) - transform.inverted()((1, -0.1)))[1]
     #global_ax.plot([0, 0, 0], [1*dy, 2*dy, 3*dy], '*', transform=fig.transFigure)
-    xy = transform((j+1, energydif[j]))
+    xy = transform((j, energydif[j]))
     print(dy, xy) 
     #xy = fig.transFigure.transform((j+1, energydif[j]))
-    ax = plt.axes([xy[0], xy[1]-(dy)/10.3, 0.10, 0.10])
+    ax = plt.axes([xy[0], xy[1]-(dy)/6.3, 0.10, 0.10])
     #fig.add_axes([j+1, energydif[j], 0.1, 0.1], transform=global_ax.transData)
     #print(xy)
     cell = atoms.get_cell()
@@ -174,7 +174,7 @@ energydif =np.zeros(len(data))
 for j in range(len(data)):
     energydif[j] = (data[j].get_potential_energy()- GM_energy -E_CO)
     print(j,energydif[j])
-for j in range(0,len(data)):
+for j in range(0,7):
     atoms = data[j]
     colorlenth = len(atoms)
     atoms =atoms*(3,3,1)
@@ -194,9 +194,9 @@ for j in range(0,len(data)):
     cell = atoms.get_cell()
     # 0 0
     dy = (inverse((1, 0)) - inverse((1, -0.1)))[1]
-    xy = transform((j+1, energydif[j]))
+    xy = transform((j, energydif[j]))
     print(dy, xy)
-    ax = plt.axes([xy[0], xy[1]+(dy)/21.50, 0.10, 0.10])
+    ax = plt.axes([xy[0], xy[1]-(dy)/50.50, 0.10, 0.10])
     img = atoms.copy()
     plot_conf(ax, img,colorlenth)
 
@@ -222,10 +222,10 @@ for j in range(0,len(data)):
     dy = (inverse((1, 0)) - inverse((1, -0.1)))[1]
     #dy = (transform.inverted()((1, 0)) - transform.inverted()((1, -0.1)))[1]
     #global_ax.plot([0, 0, 0], [1*dy, 2*dy, 3*dy], '*', transform=fig.transFigure)
-    xy = transform((j+1, energydif[j]))
+    xy = transform((j, energydif[j]))
     print(dy, xy)
     #xy = fig.transFigure.transform((j+1, energydif[j]))
-    ax = plt.axes([xy[0], xy[1]-(dy)/10.3, 0.10, 0.10])
+    ax = plt.axes([xy[0], xy[1]-(dy)/6.3, 0.10, 0.10])
     #fig.add_axes([j+1, energydif[j], 0.1, 0.1], transform=global_ax.transData)
     #print(xy)
     cell = atoms.get_cell()

@@ -68,24 +68,42 @@ def plot_conf(ax, atoms, colorlenth,rot=False):
 
 
 
-fig = plt.figure(figsize=(10.0,10.50))
+#fig = plt.figure(figsize=(10.0,10.50))
+fig, [ax1,ax2] = plt.subplots(nrows=2, ncols=1,figsize=(10.0,10.50))
+for i in range(0,7):
+    ax1.plot(i,0.0)
+    ax2.plot(i,-2.0)
+#---------------------------------------------------------------------------------------#
+d = .015  # how big to make the diagonal lines in axes coordinates
+# arguments to pass to plot, just so we don't keep repeating them
+kwargs = dict(transform=ax1.transAxes, color='k', clip_on=False)
+ax1.plot((-d, +d), (-d, +d), **kwargs)        # top-left diagonal
+ax1.plot((1 - d, 1 + d), (-d, +d), **kwargs)  # top-right diagonal
 
+kwargs.update(transform=ax2.transAxes)  # switch to the bottom axes
+ax2.plot((-d, +d), (1 - d, 1 + d), **kwargs)  # bottom-left diagonal
+ax2.plot((1 - d, 1 + d), (1 - d, 1 + d), **kwargs)  # bottom-right diagonal
+#---------------------------------------------------------------------------------------#
+ax1.set_xlim(0, 7)
+ax2.set_xlim(0, 7)
+ax1.yaxis.set_ticks(np.arange(-0.30, 0.9, 0.1))
+ax2.yaxis.set_ticks(np.arange(-3.0, -1.90, 0.1))
+#----------------------------------------------------------------------------------------#
+ax1.spines['bottom'].set_visible(False)
+ax2.spines['top'].set_visible(False)
+fig.text(0.5, 0.04, 'Lowest Isomers found for Pt$_7$ and Pt$_7$CO with GOFEE', ha='center',fontsize=14)
+fig.text(0.04, 0.5, 'Stability of Isomers (eV)', va='center', rotation='vertical',fontsize=14)
+plt.subplots_adjust(wspace=0.02,hspace=0.07)
+#plt.show()
+#-----------------------------------------------------------------------------------------#
 data=read(sys.argv[1]+'@:')
 energydif =np.zeros(len(data))
 for j in range(len(data)):
     GM_energy = data[0].get_potential_energy()
     energydif[j] = (data[j].get_potential_energy() - GM_energy)
-    plt.plot(j,energydif[j])
     print(j,energydif[j])
-plt.xlim([0,9.0])
-plt.ylim([-3.0,1.0])
-plt.xlabel('Lowest Isomer found with GOFEE')
-plt.ylabel('Stability of Isomers (eV)')
-#plt.show()
-#exit()
-global_ax = plt.gca()
+global_ax = ax1
 transform = lambda x: fig.transFigure.inverted().transform(global_ax.transData.transform(x))
-#inverse = lambda x: fig.transFigure.transform(global_ax.transData.inverted().transform(x))
 inverse = lambda x: global_ax.transData.inverted().transform(fig.transFigure.transform(x))
 for j in range(0,len(data)):
     atoms = data[j]
@@ -105,18 +123,40 @@ for j in range(0,len(data)):
     colorlenth = len(atoms) 
     
     cell = atoms.get_cell()
-    
+   
+    # 0 0
+    dy = (inverse((1, 0)) - inverse((1, -0.1)))[1]
+    xy = transform((j, energydif[j]))
+    print(dy, xy)
+    ax = plt.axes([xy[0], xy[1]-(dy)/30.50, 0.10, 0.10])
+    img = atoms.copy()
+    plot_conf(ax, img,colorlenth)
+
+    ax.set_xlim([centreofmass[0]-6.50, centreofmass[0]+7.50])
+    ax.set_ylim([10.7, 20.0])
+    ax.set_yticks([])
+    ax.set_xticks([])
+    ax.set(aspect=1)
+    #----------------- drawing box -------------------------------#
+    xlim = ax.get_xlim()
+    ylim = ax.get_ylim()
+    box_x = [xlim[0], xlim[1], xlim[1], xlim[0], xlim[0]]
+    box_y =[ylim[0], ylim[0], ylim[1], ylim[1], ylim[0]]
+    ax.add_patch(
+        patches.Rectangle(
+           (box_x[0],box_y[0]),
+           xlim[1]-xlim[0],
+           ylim[1]-ylim[0],
+           fill=True,facecolor='white', clip_on=False,zorder =0.8) )
+    ax.plot(box_x, box_y, color='blue',linewidth=5.0)
+    plt.axes(ax)
+ 
     # 0 1                                                                                                                          
    # ax = plt.subplot()
     dy = (inverse((1, 0)) - inverse((1, -0.1)))[1]
-    #dy = (transform.inverted()((1, 0)) - transform.inverted()((1, -0.1)))[1]
-    #global_ax.plot([0, 0, 0], [1*dy, 2*dy, 3*dy], '*', transform=fig.transFigure)
-    xy = transform((j+1, energydif[j]))
+    xy = transform((j, energydif[j]))
     print(dy, xy) 
-    #xy = fig.transFigure.transform((j+1, energydif[j]))
-    ax = plt.axes([xy[0], xy[1]-(dy)/10.3, 0.10, 0.10])
-    #fig.add_axes([j+1, energydif[j], 0.1, 0.1], transform=global_ax.transData)
-    #print(xy)
+    ax = plt.axes([xy[0], xy[1]-(dy)/3.40, 0.10, 0.10])
     cell = atoms.get_cell()
     img = atoms.copy()
     plot_conf(ax, img,colorlenth, rot=True)
@@ -146,7 +186,11 @@ energydif =np.zeros(len(data))
 for j in range(len(data)):
     energydif[j] = (data[j].get_potential_energy()- GM_energy -E_CO)
     print(j,energydif[j])
-for j in range(0,len(data)):
+
+global_ax = ax2
+transform = lambda x: fig.transFigure.inverted().transform(global_ax.transData.transform(x))
+inverse = lambda x: global_ax.transData.inverted().transform(fig.transFigure.transform(x))
+for j in range(0,7):
     atoms = data[j]
     colorlenth = len(atoms)
     atoms =atoms*(3,3,1)
@@ -164,23 +208,16 @@ for j in range(0,len(data)):
     colorlenth = len(atoms)
 
     cell = atoms.get_cell()
-
-    # 0 1                                                                                                                          
-   # ax = plt.subplot()
+    # 0 0
     dy = (inverse((1, 0)) - inverse((1, -0.1)))[1]
-    #dy = (transform.inverted()((1, 0)) - transform.inverted()((1, -0.1)))[1]
-    #global_ax.plot([0, 0, 0], [1*dy, 2*dy, 3*dy], '*', transform=fig.transFigure)
-    xy = transform((j+1, energydif[j]))
+    xy = transform((j, energydif[j]))
     print(dy, xy)
-    #xy = fig.transFigure.transform((j+1, energydif[j]))
-    ax = plt.axes([xy[0], xy[1]-(dy)/10.3, 0.10, 0.10])
-    #fig.add_axes([j+1, energydif[j], 0.1, 0.1], transform=global_ax.transData)
-    #print(xy)
-    cell = atoms.get_cell()
+    ax = plt.axes([xy[0], xy[1]-(dy)/15.50, 0.10, 0.10])
     img = atoms.copy()
-    plot_conf(ax, img,colorlenth, rot=True)
-    ax.set_xlim([centreofmass[0]-7.50, centreofmass[0]+7.5])
-    ax.set_ylim([centreofmass[1]-6.5, centreofmass[1]+7.0])
+    plot_conf(ax, img,colorlenth)
+
+    ax.set_xlim([centreofmass[0]-7.50, centreofmass[0]+7.50])
+    ax.set_ylim([10.7, 20.0])
     ax.set_yticks([])
     ax.set_xticks([])
     ax.set(aspect=1)
@@ -196,44 +233,12 @@ for j in range(0,len(data)):
            fill=True,facecolor='white', clip_on=False,zorder =0.8) )
     ax.plot(box_x, box_y, color='blue',linewidth=5.0)
     plt.axes(ax)
-#-------------------- set 2, Pt7+CO on surface ---------------#
-CO =read('CO_molecule_DFTrelaxed.traj@:')
-E_CO = CO[0].get_potential_energy()
-data=read(sys.argv[3]+'@:')
-energydif =np.zeros(len(data))
-for j in range(len(data)):
-    energydif[j] = (data[j].get_potential_energy()- GM_energy -E_CO)
-    print(j,energydif[j])
-for j in range(0,len(data)):
-    atoms = data[j]
-    colorlenth = len(atoms)
-    atoms =atoms*(3,3,1)
-    #print(colorlenth)
-    a=atoms
-    del atoms[[atom.index for atom in atoms if atom.index <=colorlenth*5-10 or atom.index >=colorlenth*5]]
-    centreofmass = a.get_center_of_mass()
-    atoms = data[j]*(3,3,1)
-    a=atoms
-    del atoms[atoms.positions[:,0] >=centreofmass[0]+8.10]
-    del atoms[atoms.positions[:,0] <= centreofmass[0]-8.10]
-    del atoms[atoms.positions[:,1] >= centreofmass[1]+7.8]
-    del atoms[atoms.positions[:,1] <= centreofmass[1]-7.10]
-
-    colorlenth = len(atoms)
-
-    cell = atoms.get_cell()
-
     # 0 1                                                                                                                          
    # ax = plt.subplot()
     dy = (inverse((1, 0)) - inverse((1, -0.1)))[1]
-    #dy = (transform.inverted()((1, 0)) - transform.inverted()((1, -0.1)))[1]
-    #global_ax.plot([0, 0, 0], [1*dy, 2*dy, 3*dy], '*', transform=fig.transFigure)
-    xy = transform((j+1, energydif[j]))
+    xy = transform((j, energydif[j]))
     print(dy, xy)
-    #xy = fig.transFigure.transform((j+1, energydif[j]))
-    ax = plt.axes([xy[0], xy[1]-(dy)/10.3, 0.10, 0.10])
-    #fig.add_axes([j+1, energydif[j], 0.1, 0.1], transform=global_ax.transData)
-    #print(xy)
+    ax = plt.axes([xy[0], xy[1]-(dy)/3.15, 0.10, 0.10])
     cell = atoms.get_cell()
     img = atoms.copy()
     plot_conf(ax, img,colorlenth, rot=True)
@@ -255,7 +260,7 @@ for j in range(0,len(data)):
     ax.plot(box_x, box_y, color='blue',linewidth=5.0)
     plt.axes(ax)
 
-
-name = sys.argv[4]
+ax1.set_xticks([])
+name = sys.argv[3]
 savefig(name,bbox_inches='tight')
 show()

@@ -80,7 +80,7 @@ Pt7OxCO2=[[2,-5.988002673455972],
 Pt7OxCO2 = np.array(Pt7OxCO2)
 # chemisorption of CO3 molecule form on within cluster
 Pt7OxCO3=[[2, -5.043113192502336],
-[4,-7.856083072271016],
+[4,-7.95290180188459],
 [6,  -10.031012823815558],
 [8, -12.233746351882424],
 [10, -13.887649384911711],
@@ -90,8 +90,8 @@ Pt7OxCO3=[[2, -5.043113192502336],
 Pt7OxCO3=np.array(Pt7OxCO3)
 # chemisorption of CO2 dettached from cluster
 Pt7OxCO2detached=[[2,  -5.092979606472898],
-[4, -8.091406898979184],
-[6, -10.461499640039165],
+[4, -8.394101415057602],
+[6, -10.45682208587391],
 [8, -11.880547430604516],
 [10, -13.376545594653308],
 [12, -14.277087877371812],
@@ -125,8 +125,8 @@ for i in range(len(Pt7OxCO2)):
     delta_E_f_CO2[i] =(Pt7OxCO2[i,1]-Pt7Ox[i+1,1])
     print(Pt7OxCO2[i,0],delta_E_f_CO2[i])
 # plot formation E vs No. of Oxygens
-#ax.plot(Pt7OxCO2[:,0],delta_E_f_CO2,marker="o",color='#8EBA42',label='Pt$_7$O$_{(y-1)}$CO$_2$')
-co2attached, =ax.plot(Pt7OxCO2[:,0],delta_E_f_CO2,marker="o",color='#8EBA42')
+co2attached, =ax.plot(Pt7OxCO2[0:-1,0],delta_E_f_CO2[0:-1],marker="o",color='#8EBA42')
+co2attached1, =ax.plot(Pt7OxCO2[-2::,0],delta_E_f_CO2[-2::],'--',marker="o",color='#8EBA42')
 for i in range(len(Pt7OxCO2)):
     ax.plot(Pt7OxCO2[i,0],delta_E_f_CO2[i],marker="o",color='#8EBA42')
 ############################### CO2 detached #####################################################
@@ -139,7 +139,8 @@ for i in range(len(Pt7OxCO2detached)):
     delta_E_f_CO2detached[i] =(Pt7OxCO2detached[i,1]-Pt7Ox[i+1,1])
     print(Pt7OxCO2detached[i,0],delta_E_f_CO2detached[i])
 # plot formation E vs No. of Oxygens
-co2detached, = plt.plot(Pt7OxCO2detached[:,0],delta_E_f_CO2detached,marker="o",color='#FF00FF')
+co2detached1, = plt.plot(Pt7OxCO2detached[0:-1,0],delta_E_f_CO2detached[0:-1],marker="o",color='#FF00FF')
+co2detached, = plt.plot(Pt7OxCO2detached[-2::,0],delta_E_f_CO2detached[-2::],'--',marker="o",color='#FF00FF')
 for i in range(len(Pt7OxCO2detached)):
     ax.plot(Pt7OxCO2detached[i,0],delta_E_f_CO2detached[i],marker="o",color='#FF00FF')
 ######################## CO3 attached ############################################################
@@ -152,19 +153,19 @@ for i in range(len(Pt7OxCO3)):
     delta_E_f_CO3[i] =(Pt7OxCO3[i,1]-Pt7Ox[i+1,1])
     print(Pt7OxCO3[i,0],delta_E_f_CO3[i])
 # plot formation E vs No. of Oxygens
-#ax.plot(Pt7OxCO3[:,0],delta_E_f_CO3,marker="o",color='#FF0000',label='Pt$_7$O$_{(y-2)}$CO$_3$')
-co3attached, = plt.plot(Pt7OxCO3[:,0],delta_E_f_CO3,marker="o",color='#FF0000')
+co3attached1, = plt.plot(Pt7OxCO3[0:-1,0],delta_E_f_CO3[0:-1],marker="o",color='#ff796c')
+co3attached, = plt.plot(Pt7OxCO3[-2::,0],delta_E_f_CO3[-2::],'--',marker="o",color='#ff796c')
 for i in range(len(Pt7OxCO3)):
-    ax.plot(Pt7OxCO3[i,0],delta_E_f_CO3[i],marker="o",color='#FF0000')
+    ax.plot(Pt7OxCO3[i,0],delta_E_f_CO3[i],marker="o",color='#ff796c')
 ##################################################################################################
-plt.legend([coattached,co2attached,co2detached,co3attached], ["","","", ""],
-   handler_map={coattached:HandlerLineImage("Pt7Oxides_template_COform.png"),co2attached:HandlerLineImage("Pt7Oxides_template_CO2form1.png"),co2detached: HandlerLineImage("Pt7Oxides_template_CO2form4.png"), co3attached: HandlerLineImage("Pt7Oxides_template_CO3form.png")},
+plt.legend([coattached,co2attached,co2detached1,co3attached1], ["","","", ""],
+   handler_map={coattached:HandlerLineImage("Pt7Oxides_template_COform.png"),co2attached:HandlerLineImage("Pt7Oxides_template_CO2form1.png"),co2detached1: HandlerLineImage("Pt7Oxides_template_CO2form4.png"), co3attached1: HandlerLineImage("Pt7Oxides_template_CO3form.png")},
    handlelength=3.50, labelspacing=0.0, fontsize=40, borderpad=0.2, loc=1,
     handletextpad=0.0, borderaxespad=0.1)
 ################################################################################################
-ax.set_ylabel(r'Extra Stability of Pt$_7$-Oxides with CO [$\Delta$E$_f$ (eV)]')
-ax.set_xlabel(r'No. of O')
-ax.set_xticks(np.arange(0, 22, step=1))
+ax.set_ylabel(r'Extra Stability of Pt$_7$O$_y$ due to CO [$\Delta$E$_f$ (eV)]')
+ax.set_xlabel(r'No. of Oxygens(y) in Pt$_7$O$_y$ + CO')
+ax.set_xticks(np.arange(0, 21, step=1))
 #plt.legend()
 savefig('delta_COEf_CO2Ef_CO3Ef_O2Ef_Pt7Oxides.png')
 plt.show()

@@ -24,11 +24,13 @@ import os
 import ase.parallel as mpi
 world = mpi.world
 
-data1=read('Pt7O6CO_Al2O3_KRRfund9l_DFTrelaxedsorted1.traj@:')
+data1=read('Pt7O6_CO_Al2O3_KRRfund9l_DFTrelaxedsorted.traj@:')
 traj = Trajectory('Pt7O6CO_Al2O3_KRRfund9l_DFTrelaxedsorted.traj','w')
-#numbers =[0,1,4,6,8,11,12,13,16,17,19,21,22,27,28,29,31]
-#for a,j in enumerate(numbers):
-for j in range(len(data1)):
-    if (j != 7 ):
-       traj.write(data1[j])
+numbers =[0,4,5,8,10,13,15,19,22,25]
+#numbers =[0,3,7,9,11,12,16,17,22,25,26,29]
+print(len(numbers))
+for a,j in enumerate(numbers):
+#for j in range(len(data1)):
+#    if (j != 7 ):
+    traj.write(data1[j])
        #print(data1[j].get_potential_energy())

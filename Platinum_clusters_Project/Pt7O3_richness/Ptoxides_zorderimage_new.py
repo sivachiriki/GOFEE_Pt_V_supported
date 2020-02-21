@@ -56,17 +56,6 @@ def plot_conf(ax, atoms, colorlenth,rot=False):
            colors[i] =[0.0, 0.0, 0.0]
         if (atom.number ==8 and positions[i,2]>12.2):
            colors[i] =[128/255, 0/255, 128/255]
-           #colors[i] =[0.0, 128/255,0.0]
-     #   if (atom.number ==8 and i >=colorlenth*5-8):
-     #      colors[i] =[102/255, 0/255, 0/255]
-       # if (atom.number ==8 and i >= 135+colorlenth*2 and i <colorlenth*3 ):
-       #    colors[i] =[102/255, 0/255, 0/255]
-       # if (atom.number ==8 and i >= 135+colorlenth*3 and i <colorlenth*4 ):
-       #    colors[i] =[102/255, 0/255, 0/255]
-      #  if (atom.number ==8 and i >= 135+colorlenth*4 and i <colorlenth*5 ):
-      #     colors[i] =[102/255, 0/255, 0/255]
-      #  if (atom.number ==8 and i >= 135+colorlenth*5 and i <colorlenth*6 ):
-      #     colors[i] =[102/255, 0/255, 0/255]
 
     alp = [None] * colors.shape[0]
     for i,a in enumerate(atoms):
@@ -90,7 +79,7 @@ for j in range(len(data)):
     GM_energy = data[0].get_potential_energy()
     energydif[j] = (data[j].get_potential_energy() - GM_energy)
 
-for j in range(0,len(data)):
+for j in range(0,8):
     inner = gridspec.GridSpecFromSubplotSpec(2, 1,subplot_spec=outer[j], wspace=0.00, hspace=0.0, height_ratios=[6.86,9.9])
     atoms = data[j]
     colorlenth = len(atoms)
@@ -103,10 +92,16 @@ for j in range(0,len(data)):
     centreofmass = a.get_center_of_mass()
     atoms = data[j]*(3,3,1)
     a=atoms
-    del atoms[atoms.positions[:,0] >=centreofmass[0]+8.10]
-    del atoms[atoms.positions[:,0] <= centreofmass[0]-8.10]
-    del atoms[atoms.positions[:,1] >= centreofmass[1]+7.8]
-    del atoms[atoms.positions[:,1] <= centreofmass[1]-7.10]
+    if (j != 2):
+       del atoms[atoms.positions[:,0] >=centreofmass[0]+8.10]
+       del atoms[atoms.positions[:,0] <= centreofmass[0]-8.10]
+       del atoms[atoms.positions[:,1] >= centreofmass[1]+7.8]
+       del atoms[atoms.positions[:,1] <= centreofmass[1]-7.10]
+    if (j == 2):
+       del atoms[atoms.positions[:,0] >=centreofmass[0]+8.10]
+       del atoms[atoms.positions[:,0] <= centreofmass[0]-8.10]
+       del atoms[atoms.positions[:,1] >= centreofmass[1]+5.8]
+       del atoms[atoms.positions[:,1] <= centreofmass[1]-9.10]
 
     colorlenth = len(atoms)
     #view(atoms)
@@ -122,10 +117,6 @@ for j in range(0,len(data)):
     ax.set_xticks([])
     ax.set(aspect=1)
     fig.add_subplot(ax)
-    if (j ==0):
-       name2 ='Pt$_7$O$_3$ Lowest Isomers'
-       ax.set_title(name2)
-
     #----------------- drawing box -------------------------------#
     xlim = ax.get_xlim()
     ylim = ax.get_ylim()
@@ -149,6 +140,8 @@ for j in range(0,len(data)):
 
     ax.set_xlim([centreofmass[0]-7.5, centreofmass[0]+7.50])
     ax.set_ylim([centreofmass[1]-6.5, centreofmass[1]+7.0])
+    if (j ==2):
+       ax.set_ylim([centreofmass[1]-8.5, centreofmass[1]+5.0])
     name ='$\Delta E = {:3.3f}$ eV'.format(energydif[j])
     ax.text(0.05, -0.14, name, transform=ax.transAxes,fontsize=10)
     name1 = "S$_{"+ str(j+1) + "}$"
@@ -172,6 +165,7 @@ for j in range(0,len(data)):
     ax.plot(box_x, box_y, color='blue',linewidth=5.0)
 
     fig.add_subplot(ax)
+fig.text(0.5, 0.89, 'Lowest Isomers of Pt$_7$O$_{3}$', ha='center',fontsize=14)
 name = sys.argv[2]
 name =name
 savefig(name,bbox_inches='tight')

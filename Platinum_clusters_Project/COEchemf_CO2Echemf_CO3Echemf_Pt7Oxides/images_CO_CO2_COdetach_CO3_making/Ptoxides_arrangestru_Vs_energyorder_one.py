@@ -18,23 +18,8 @@ from math import atan2,pi
 import matplotlib.gridspec as gridspec
 
 
-#matplotlib.rcParams['xtick.direction'] = 'out'
-#matplotlib.rcParams['ytick.direction'] = 'out'
-#matplotlib.rc('font',**{'family':'sans-serif',
-#                        'sans-serif':['Helvetica'],
-#                        'size':14})
-#matplotlib.rc('text',usetex=True)
-
-#matplotlib.rcParams['text.latex.unicode']=False
-#matplotlib.rcParams['text.latex.preamble']=['\usepackage{bm}']
-#matplotlib.rcParams['text.latex.preamble']=['\usepackage{xfrac}']
-#matplotlib.rcParams['mathtext.default'] = 'regular'
-#matplotlib.rcParams['ps.usedistiller'] = 'xpdf'
-
 matplotlib.rc('xtick', labelsize=14)
 matplotlib.rc('ytick', labelsize=14)
-
-
 
 def plot_atoms(ax, atoms, xyz, acols, alp, z):
 
@@ -44,10 +29,7 @@ def plot_atoms(ax, atoms, xyz, acols, alp, z):
     for ia in indices:
         acol = acols[ia]
         ecol = ecols[ia]
-       # if atoms[ia].symbol == 'Ti':
-       #     arad = aradii[atoms[ia].number] #* 0.9 * 0.5
-       # else:
-        arad = aradii[atoms[ia].number] #* 0.9 
+        arad = aradii[atoms[ia].number]  
         apos = atoms[ia].position
         eps = arad
 
@@ -72,17 +54,7 @@ def plot_conf(ax, atoms, colorlenth,rot=False):
         if (atom.number ==6):
            colors[i] =[0.1, 0.2, 0.9]
         if (atom.number ==8 and positions[i,2]>12.2):
-           colors[i] =[102/255, 0/255, 0/255]
-     #   if (atom.number ==8 and i >=colorlenth*5-8):
-     #      colors[i] =[102/255, 0/255, 0/255]
-       # if (atom.number ==8 and i >= 135+colorlenth*2 and i <colorlenth*3 ):
-       #    colors[i] =[102/255, 0/255, 0/255]
-       # if (atom.number ==8 and i >= 135+colorlenth*3 and i <colorlenth*4 ):
-       #    colors[i] =[102/255, 0/255, 0/255]
-      #  if (atom.number ==8 and i >= 135+colorlenth*4 and i <colorlenth*5 ):
-      #     colors[i] =[102/255, 0/255, 0/255]
-      #  if (atom.number ==8 and i >= 135+colorlenth*5 and i <colorlenth*6 ):
-      #     colors[i] =[102/255, 0/255, 0/255]
+           colors[i] =[128/255, 0/255, 128/255]
 
     alp = [None] * colors.shape[0]
     for i,a in enumerate(atoms):
@@ -96,44 +68,56 @@ def plot_conf(ax, atoms, colorlenth,rot=False):
 
 
 
+fig = plt.figure(figsize=(14.0,10.50))
+
 data=read(sys.argv[1]+'@:')
 energydif =np.zeros(len(data))
 for j in range(len(data)):
     GM_energy = data[0].get_potential_energy()
     energydif[j] = (data[j].get_potential_energy() - GM_energy)
-    #print('{:3.3f}'.format(energydif[j]))
-for j in range(0,len(data)):
+    plt.plot(j,energydif[j])
+    print(j,energydif[j])
+#plt.xlim(([0,10.0])
+plt.xticks(np.arange(0, 12, 1))
+plt.ylim([-4.0,3.0])
+#plt.margins(x=0.5, y=0.05)
+plt.xlabel('Lowest Isomer found for Pt7O$_{10}$CO with GOFEE')
+plt.ylabel('Stability of Isomers (eV)')
+#plt.show()
+#exit()
+global_ax = plt.gca()
+transform = lambda x: fig.transFigure.inverted().transform(global_ax.transData.transform(x))
+#inverse = lambda x: fig.transFigure.transform(global_ax.transData.inverted().transform(x))
+inverse = lambda x: global_ax.transData.inverted().transform(fig.transFigure.transform(x))
+for j in range(4,5):
     atoms = data[j]
     colorlenth = len(atoms)
     atoms =atoms*(3,3,1)
-    print(colorlenth)
-   # write('newimage.traj',atoms)
-    #exit()
+    #print(colorlenth)
     a=atoms
-    del atoms[[atom.index for atom in atoms if atom.index <=colorlenth*5-8 or atom.index >=colorlenth*5]]
-    #view(atoms)
+    del atoms[[atom.index for atom in atoms if atom.index <=colorlenth*5-20 or atom.index >=colorlenth*5]]
     centreofmass = a.get_center_of_mass()
     atoms = data[j]*(3,3,1)
     a=atoms
     del atoms[atoms.positions[:,0] >=centreofmass[0]+9.0]
-    del atoms[atoms.positions[:,0] <= centreofmass[0]-9.0]
-    del atoms[atoms.positions[:,1] >= centreofmass[1]+9.0]
-    del atoms[atoms.positions[:,1] <= centreofmass[1]-9.0]
+    del atoms[atoms.positions[:,0] <= centreofmass[0]-7.10]
+    del atoms[atoms.positions[:,1] >= centreofmass[1]+7.3]
+    del atoms[atoms.positions[:,1] <= centreofmass[1]-7.10]
   
     colorlenth = len(atoms) 
-    #view(atoms)
-    #exit() 
-    plt.figure(figsize=(4.0,5.0))
-    gs = gridspec.GridSpec(2, 1,
-                           height_ratios=[6.86,11.75])
     
     cell = atoms.get_cell()
+    view(atoms) 
+   # exit() 
     # 0 0
-    ax = plt.subplot(gs[0, 0])
+    dy = (inverse((1, 0)) - inverse((1, -0.1)))[1]
+    xy = transform((j+1, energydif[j]))
+    print(dy, xy)
+    ax = plt.axes([xy[0]+0.007, xy[1]-(dy)/300.0, 0.066, 0.08])
     img = atoms.copy()
     plot_conf(ax, img,colorlenth)
-    
-    ax.set_xlim([centreofmass[0]-8.0, centreofmass[0]+8.0])
+
+    ax.set_xlim([centreofmass[0]-7.0, centreofmass[0]+8.0])
     ax.set_ylim([10.7, 20.0])
     ax.set_yticks([])
     ax.set_xticks([])
@@ -141,8 +125,6 @@ for j in range(0,len(data)):
     #----------------- drawing box -------------------------------#
     xlim = ax.get_xlim()
     ylim = ax.get_ylim()
-    print(xlim)
-    print(ylim)
     box_x = [xlim[0], xlim[1], xlim[1], xlim[0], xlim[0]]
     box_y =[ylim[0], ylim[0], ylim[1], ylim[1], ylim[0]]
     ax.add_patch(
@@ -152,25 +134,29 @@ for j in range(0,len(data)):
            ylim[1]-ylim[0],
            fill=True,facecolor='white', clip_on=False,zorder =0.8) )
     ax.plot(box_x, box_y, color='blue',linewidth=5.0)
-    
+    plt.axes(ax)
+ 
     # 0 1                                                                                                                          
-    ax = plt.subplot(gs[1, 0])
+   # ax = plt.subplot()
+    dy = (inverse((1, 0)) - inverse((1, -0.1)))[1]
+    #dy = (transform.inverted()((1, 0)) - transform.inverted()((1, -0.1)))[1]
+    #global_ax.plot([0, 0, 0], [1*dy, 2*dy, 3*dy], '*', transform=fig.transFigure)
+    xy = transform((j+1, energydif[j]))
+    print(dy, xy) 
+    #xy = fig.transFigure.transform((j+1, energydif[j]))
+    ax = plt.axes([xy[0], xy[1]-(dy)/13.3, 0.08, 0.08])
+    #fig.add_axes([j+1, energydif[j], 0.1, 0.1], transform=global_ax.transData)
+    #print(xy)
     cell = atoms.get_cell()
     img = atoms.copy()
     plot_conf(ax, img,colorlenth, rot=True)
-    
-    ax.set_xlim([centreofmass[0]-8.0, centreofmass[0]+8.0])
-    ax.set_ylim([centreofmass[1]-9.0+0.5, centreofmass[1]+9.0-1.50])
-    name ='$\Delta E = {:3.3f}$ eV'.format(energydif[j])
-    ax.text(0.1, -0.1, name, transform=ax.transAxes,fontsize=20)
+    ax.set_xlim([centreofmass[0]-7.0, centreofmass[0]+8.0])
+    ax.set_ylim([centreofmass[1]-6.5, centreofmass[1]+7.0])
     ax.set_yticks([])
     ax.set_xticks([])
     ax.set(aspect=1)
-    #----------------- drawing box -------------------------------#
     xlim = ax.get_xlim()
     ylim = ax.get_ylim()
-    print(xlim)
-    print(ylim)
     box_x = [xlim[0], xlim[1], xlim[1], xlim[0], xlim[0]]
     box_y =[ylim[0], ylim[0], ylim[1], ylim[1], ylim[0]]
     ax.add_patch(
@@ -180,12 +166,8 @@ for j in range(0,len(data)):
            ylim[1]-ylim[0],
            fill=True,facecolor='white', clip_on=False,zorder =0.8) )
     ax.plot(box_x, box_y, color='blue',linewidth=5.0)
+    plt.axes(ax)
 
-    
-    gs.update(wspace=0.00,hspace=0.00)
-    plt.tight_layout()
-    name = sys.argv[2]
-    name =name+'_{}'.format(j)
-    savefig(name,bbox_inches='tight')
-    show()
-    exit()
+name = sys.argv[2]
+savefig(name,bbox_inches='tight')
+show()
