@@ -536,6 +536,7 @@ for j in range(0,len(data)-1):
 ax1.set_xticks([])
 ax2.set_xticks([])
 ax3.set_xticks([])
+ax4.set_xlim(1, 15)
 name = sys.argv[5]
 #savefig(name,format='png')
 savefig(name,format='pdf')

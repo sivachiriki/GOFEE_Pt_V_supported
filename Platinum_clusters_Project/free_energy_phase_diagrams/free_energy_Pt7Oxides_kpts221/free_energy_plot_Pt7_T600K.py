@@ -14,7 +14,7 @@ kB=8.61733*10**-5 # eV/K
 T = 600 # K
 p0 =1.01325 * 1e3 # bar
 #all the GO structures
-O2 = read('O2_molecule_DFTrelaxed_kpts221.traj')
+O2 = read('O2_molecule_DFTrelaxed_kpts221_spinpolarisedcal.traj')
 Pt7 = read('Pt7_Al2O3_DFTrelaxed_GMplanar.traj')
 Pt7_O2 = read('Pt7O2_Al2O3_GMDFTrelaxed.traj')
 Pt7_2O2 = read('Pt7O4_Al2O3_GMDFTrelaxed.traj')
@@ -28,7 +28,7 @@ Pt7_7O2 = read('Pt7O14_Al2O3_GMDFTrelaxed.traj')
 ga_stru =[Pt7_O2,Pt7_2O2,Pt7_3O2,Pt7_4O2,Pt7_5O2,Pt7_6O2,Pt7_7O2]
 
 N_O = [2,4,6,8,10,12,14]
-
+Oxygen_correct = -0.5
 # energies of structures
 E_O2 = O2.get_potential_energy()
 E_Pt7 = Pt7.get_potential_energy()
@@ -44,7 +44,7 @@ E_Pt77O2 = Pt7_7O2.get_potential_energy()
 Gs_slab ={}
 colors = {}
 #color_lib = ['#377eb8','#4daf4a','#984ea3','#a65628','#ffff33']
-color_lib = ['#377eb8','#4daf4a','#984ea3','#a65628','#999999','#fdbf6f', '#ff7f00','#ffff33']
+color_lib = ['#377eb8','#4daf4a','#984ea3','#a65628','#999999','#FF0000', '#ff7f00','#ffff33']
 print(color_lib)
 resolution = 300
 alpha_back =0.70
@@ -78,7 +78,7 @@ def get_mu(T,p):
     G = thermo.get_gibbs_energy(temperature=T, pressure=p0, verbose=False)
     #print(p0,T)
     mu0 = 0.5*G
-    mu = 0.5*E_O2 + mu0 + 0.5*kB*T*np.log(p / (1.01325 * 1e3))
+    mu = mu0 + 0.5*kB*T*np.log(p / (1.01325 * 1e3))
    # print(T,p,np.log(p / (1.01325 * 1e3)),mu)
     return mu
 
@@ -131,14 +131,14 @@ def get_highest_e_pt(mu):
     return [highest_N,highest_e]
  
 
-ps = np.power(10,[-24.,-22.,-20.,-18.,-16.,-14.,-12.,-10.,-8.,-6.,-4.,-2.,0.,2.,4.,6.,8.,10.,12.,14.,16., 18.,20.,22.,24.,26.,28.,30.])
+ps = np.power(10,[-30.,-28.,-26.,-24.,-22.,-20.,-18.,-16.,-14.,-12.,-10.,-8.,-6.,-4.,-2.,0.,2.,4.,6.,8.,10.,12.,14.,16., 18.,20.,22.,24.,26.,28.,30.])
 #print(ps)
 #exit()
 mu_p = [get_mu(T,p) for p in ps]
 print(mu_p)
 delta_E =np.zeros(len(ga_stru))
 for i,atoms in enumerate(ga_stru):
-    delta_E[i] = (ga_stru[i].get_potential_energy() - E_Pt7) 
+    delta_E[i] = (ga_stru[i].get_potential_energy() - E_Pt7-(N_O[i]*0.5*E_O2)) 
    # print(delta_E[i])
 
 #fig, ax = plt.subplots()
@@ -146,6 +146,7 @@ fig = figure(figsize=(10,5))
 ax1 = fig.add_subplot(121)
 
 delta_G =np.zeros([len(ga_stru),len(mu_p)])
+ax1.plot(mu_p,delta_G[0,:],'-',color='#ffff33',label='Pt$_{7}$O$_0$',zorder=2)
 for i in range(len(ga_stru)):
     for j in range(len(mu_p)):
         delta_G[i,j] = delta_E[i]-N_O[i]*mu_p[j]
@@ -154,16 +155,16 @@ for i in range(len(ga_stru)):
    # print(delta_G[i,:])
 
 #xlims =[min(mu_p),max(mu_p)]
-xlims =[-7.0,-4.0]
+xlims =[-2.23,0.0]
 print(xlims)
 ax1.set_xlim(xlims)
 # Lowest line and fill
 #ylims = [get_lowest_e(mu_p[0])[1]*1.1,get_highest_e(mu_p[-1])[1]*1.1]
-ylims =[-60.0,20.0]
+ylims =[-16.0,10.0]
 ax1.set_ylim(ylims)
 #print(ylims)
-xticks([-7.0,-6.5,-6.0,-5.5,-5.0,-4.5,-4.0],[r'-7.0','-6.5','-6.0','-5.5','-5.0','-4.5','-4.0'])
-yticks([-60.0,-50.0,-40.0,-30.0,-20.0,-10.0,0.0,10.0,20.],['-60.0','-50.0','-40.0','-30.0','-20.0','-10.0','0.0','10.0','20.0'])
+xticks([-2.0,-1.5,-1.0,-0.5,0.0],[r'-2.0','-1.5','-1.0','-0.5','0.0'])
+yticks([-16.0,-14.0,-12.0,-10.0,-8.0,-6.0,-4.0,-2.0,0.0,2.0,4.0,6.0,8.0,10.0],['-16.0','-14.0','-12.0','-10.0','-8.0','-6.0','-4.0','-2.0','0.0','2.0','4.0','6.0','8.0','10.0'])
 
 mu_first = mu_p[0]
 #print(mu_first)
@@ -181,9 +182,9 @@ for mu_last in np.linspace(mu_p[0],mu_p[-1]+1e-10, 200):
         mu_first = mu_last
 
 ax1.legend(loc='upper right', frameon=False)
-ax1.set_xlabel(r'$\mu_\mathrm{O}(T,p)$ (eV)')
+ax1.set_xlabel(r'$\Delta \mu_\mathrm{O}(T,p)$ (eV)')
 ax1.set_ylabel(r'$\Delta G$ (eV)')
-ax1.set_title('Free energy diagram at 600 K Temp.')
+ax1.set_title('(a) Free energy diagram at 600 K Temp.')
 # p-T diagram
 ax2 = fig.add_subplot(122)
 T_range = np.linspace(100, 1200, resolution)
@@ -233,17 +234,16 @@ ax2.set_ylim([p_range[0],p_range[-1]])
 ax2.set_xlim([T_range[0],T_range[-1]])
 yticks(np.power(10,np.linspace(-24,30,22)),range(-24,30,2))
 xticks(range(100,1201,200),range(100,1201,200))
-ax2.set_title('Phase diagram for Pt$_7$O$_y$')
+ax2.set_title('(b) Phase diagram')
 ax2.set_ylabel(r'log$_{10}$($\frac{p}{p_0}$)')
 ax2.set_xlabel(r'$T$ (K)')
-#ax2.text(0.1, 0.70,'Pt$_7$O$_{16}$',color=color_levels1[5],alpha=1.0,fontsize=16, transform=ax2.transAxes)
 ax2.text(0.1, 0.60,'Pt$_7$O$_{14}$',color=color_levels1[4],alpha=1.0,fontsize=16, transform=ax2.transAxes)
 #ax2.text(0.2, 0.5,'Pt$_7$O$_{12}$',fontsize=16,color=color_levels1[4],alpha=1.0,transform=ax2.transAxes)
-ax2.text(0.5, 0.6,'Pt$_7$O$_{10}$',fontsize=16, color=color_levels1[3],alpha=1.0,transform=ax2.transAxes)
+ax2.text(0.4, 0.5,'Pt$_7$O$_{10}$',fontsize=16, color=color_levels1[3],alpha=1.0,transform=ax2.transAxes)
 #ax2.text(0.3, 0.4,'Pt$_7$O$_{8}$',fontsize=16, color=color_levels1[3],alpha=1.0,transform=ax2.transAxes)
 ax2.text(0.4, 0.3,'Pt$_7$O$_{6}$',fontsize=16, color=color_levels1[2],alpha=1.0,transform=ax2.transAxes)
-ax2.text(0.7, 0.45,'Pt$_7$O$_{4}$',fontsize=16,color=color_levels1[1],alpha=1.0,transform=ax2.transAxes)
+ax2.text(0.7, 0.40,'Pt$_7$O$_{4}$',fontsize=16,color=color_levels1[1],alpha=1.0,transform=ax2.transAxes)
 ax2.text(0.7, 0.2,'Pt$_7$O$_{2}$',fontsize=16,color=color_levels1[0],alpha=1.0,transform=ax2.transAxes)
 
-savefig('free_energy_diagram_Pt7Oxides_600K.png')
+savefig('free_energy_diagram_Pt7Oxides_600K.pdf')
 plt.show()

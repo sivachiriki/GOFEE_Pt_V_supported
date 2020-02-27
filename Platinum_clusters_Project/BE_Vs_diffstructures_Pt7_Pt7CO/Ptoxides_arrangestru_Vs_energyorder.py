@@ -16,7 +16,9 @@ from ase.data import covalent_radii as aradii
 from matplotlib.patches import Circle
 from math import atan2,pi
 import matplotlib.gridspec as gridspec
-
+import matplotlib.cbook as cbook
+import matplotlib.dates as dates
+import matplotlib.ticker as ticker
 
 matplotlib.rc('xtick', labelsize=14)
 matplotlib.rc('ytick', labelsize=14)
@@ -70,7 +72,7 @@ def plot_conf(ax, atoms, colorlenth,rot=False):
 
 #fig = plt.figure(figsize=(10.0,10.50))
 fig, [ax1,ax2] = plt.subplots(nrows=2, ncols=1,figsize=(10.0,10.50))
-for i in range(0,7):
+for i in range(0,8):
     ax1.plot(i,0.0)
     ax2.plot(i,-2.0)
 #---------------------------------------------------------------------------------------#
@@ -84,8 +86,8 @@ kwargs.update(transform=ax2.transAxes)  # switch to the bottom axes
 ax2.plot((-d, +d), (1 - d, 1 + d), **kwargs)  # bottom-left diagonal
 ax2.plot((1 - d, 1 + d), (1 - d, 1 + d), **kwargs)  # bottom-right diagonal
 #---------------------------------------------------------------------------------------#
-ax1.set_xlim(0, 7)
-ax2.set_xlim(0, 7)
+ax1.set_xlim(0.4, 7.5)
+ax2.set_xlim(0.4, 7.5)
 ax1.yaxis.set_ticks(np.arange(-0.30, 0.9, 0.1))
 ax2.yaxis.set_ticks(np.arange(-3.0, -1.90, 0.1))
 #----------------------------------------------------------------------------------------#
@@ -126,7 +128,7 @@ for j in range(0,len(data)):
    
     # 0 0
     dy = (inverse((1, 0)) - inverse((1, -0.1)))[1]
-    xy = transform((j, energydif[j]))
+    xy = transform((j+0.5, energydif[j]))
     print(dy, xy)
     ax = plt.axes([xy[0], xy[1]-(dy)/30.50, 0.10, 0.10])
     img = atoms.copy()
@@ -154,7 +156,7 @@ for j in range(0,len(data)):
     # 0 1                                                                                                                          
    # ax = plt.subplot()
     dy = (inverse((1, 0)) - inverse((1, -0.1)))[1]
-    xy = transform((j, energydif[j]))
+    xy = transform((j+0.5, energydif[j]))
     print(dy, xy) 
     ax = plt.axes([xy[0], xy[1]-(dy)/3.40, 0.10, 0.10])
     cell = atoms.get_cell()
@@ -210,7 +212,7 @@ for j in range(0,7):
     cell = atoms.get_cell()
     # 0 0
     dy = (inverse((1, 0)) - inverse((1, -0.1)))[1]
-    xy = transform((j, energydif[j]))
+    xy = transform((j+0.5, energydif[j]))
     print(dy, xy)
     ax = plt.axes([xy[0], xy[1]-(dy)/15.50, 0.10, 0.10])
     img = atoms.copy()
@@ -236,7 +238,7 @@ for j in range(0,7):
     # 0 1                                                                                                                          
    # ax = plt.subplot()
     dy = (inverse((1, 0)) - inverse((1, -0.1)))[1]
-    xy = transform((j, energydif[j]))
+    xy = transform((j+0.5, energydif[j]))
     print(dy, xy)
     ax = plt.axes([xy[0], xy[1]-(dy)/3.15, 0.10, 0.10])
     cell = atoms.get_cell()
@@ -261,6 +263,7 @@ for j in range(0,7):
     plt.axes(ax)
 
 ax1.set_xticks([])
+
 name = sys.argv[3]
 savefig(name,bbox_inches='tight')
 show()
