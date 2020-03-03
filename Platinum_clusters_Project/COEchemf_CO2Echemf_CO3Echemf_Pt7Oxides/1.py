@@ -159,7 +159,7 @@ for i in range(len(Pt7OxCO3)):
     ax.plot(Pt7OxCO3[i,0],delta_E_f_CO3[i],marker="o",color='#ff796c')
 ##################################################################################################
 plt.legend([coattached,co2attached,co2detached1,co3attached1], ["","","", ""],
-   handler_map={coattached:HandlerLineImage("Pt7Oxides_template_COform.png"),co2attached:HandlerLineImage("Pt7Oxides_template_CO2form1.png"),co2detached1: HandlerLineImage("Pt7Oxides_template_CO2form4.png"), co3attached1: HandlerLineImage("Pt7Oxides_template_CO3form.png")},
+   handler_map={coattached:HandlerLineImage("COattached_template.png"),co2attached:HandlerLineImage("CO2attached_template.png"),co2detached1: HandlerLineImage("CO2detached_template.png"), co3attached1: HandlerLineImage("CO3attached_template.png")},
    handlelength=3.50, labelspacing=0.0, fontsize=40, borderpad=0.2, loc=1,
     handletextpad=0.0, borderaxespad=0.1)
 ################################################################################################

@@ -43,7 +43,7 @@ class HandlerLineImage(HandlerBase):
         return [l,image]
 ################################# E_form of O2 ####################################################
 # read stru of GM Pt7 oxides
-O2 = read('O2_kpts221.traj')
+O2 = read('O2_kpts221_spinpolarisedcal.traj')
 Pt7O0 =  read('Pt7_Al2O3_Planar_GMDFTrelaxed.traj')
 Pt7O2 =  read('Pt7O2_Al2O3_chem_GMDFTrelaxed.traj')
 Pt7O4 =  read('Pt7O4_Al2O3_chem_GMDFTrelaxed.traj')
@@ -90,7 +90,18 @@ PtOxides, = ax.plot(N_O,E_f_correct,marker="o",color='#1E90FF')
 for i, nu in enumerate(N_O):
     #ax.plot(N_O[i],E_f_correct[i],marker="o",color=colors[i])
     ax.plot(N_O[i],E_f_correct[i],marker="o",color='#1E90FF')
-
+##################################### without EO2 correction ##########################################
+# cal formation energy
+#E_f =np.zeros(len(gm_tru))
+#E_f_correct =np.zeros(len(gm_tru))
+#for i,atoms in enumerate(gm_tru):
+#    E_f_correct[i] = (gm_tru[i].get_potential_energy() - gm_tru[0].get_potential_energy() - (N_O[i])*(0.50000*O2.get_potential_energy()))
+#    print(N_O[i],E_f_correct[i])
+#E_f_correct[0] =0.0
+# plot formation E vs No. of Oxygens
+#PtOxides, = ax.plot(N_O,E_f_correct,marker="o",color='#1E90FF')
+#for i, nu in enumerate(N_O):
+#    ax.plot(N_O[i],E_f_correct[i],marker="o",color='#1E90FF')
 ################################# E_ads of CO ####################################################
 CO = read('CO_molecule_DFTrelaxed.traj')
 E_CO = CO.get_potential_energy()
@@ -253,7 +264,7 @@ for i, nu in enumerate(N_O):
     ax.plot(N_O[i],E_ads[i],marker="o",color='#FF0000') 
 ##################################################################################################
 plt.legend([PtOxides,coattached,co2attached,co2detached,co3attached], ["","","","", ""],
-   handler_map={PtOxides:HandlerLineImage("Pt7Oxides_template.png"),coattached:HandlerLineImage("Pt7Oxides_template_COform.png"),co2attached:HandlerLineImage("Pt7Oxides_template_CO2form1.png"),co2detached: HandlerLineImage("Pt7Oxides_template_CO2form4.png"), co3attached: HandlerLineImage("Pt7Oxides_template_CO3form.png")},
+   handler_map={PtOxides:HandlerLineImage("Pt7Oxides_template.png"),coattached:HandlerLineImage("COattached_template.png"),co2attached:HandlerLineImage("CO2attached_template.png"),co2detached: HandlerLineImage("CO2detached_template.png"), co3attached: HandlerLineImage("CO3attached_template.png")},
    handlelength=3.50, labelspacing=0.0, fontsize=40, borderpad=0.2, loc=1,
     handletextpad=0.0, borderaxespad=0.1)
 ax.set_ylabel(r'E$_f$ (eV)')

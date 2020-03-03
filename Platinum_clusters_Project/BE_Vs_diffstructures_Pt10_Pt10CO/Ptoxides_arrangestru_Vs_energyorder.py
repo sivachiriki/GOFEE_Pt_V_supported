@@ -52,7 +52,8 @@ def plot_conf(ax, atoms, colorlenth,rot=False):
         if (atom.number ==78):
            colors[i] =[0.1, 0.6, 0.6]
         if (atom.number ==6):
-           colors[i] =[0.1, 0.2, 0.9]
+           #colors[i] =[0.1, 0.2, 0.9]
+           colors[i] =[0.0, 0.0, 0.0]
         if (atom.number ==8 and positions[i,2]>12.2):
            colors[i] =[128/255, 0/255, 128/255]
 
