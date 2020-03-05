@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.28)  5 MAR 2020 12:37
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.28)  5 MAR 2020 13:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -890,6 +890,13 @@ File: BE_order_2Ov_V2O5clu_TiO2_101sur.png Graphic file (type png)
 Package pdftex.def Info: BE_order_2Ov_V2O5clu_TiO2_101sur.png  used on input li
 ne 114.
 (pdftex.def)             Requested size: 510.0pt x 523.17764pt.
+<NEB_calculation_4by1cell_2VO3Hdiffusion.png, id=19, 710.31085pt x 483.17657pt>
+
+File: NEB_calculation_4by1cell_2VO3Hdiffusion.png Graphic file (type png)
+<use NEB_calculation_4by1cell_2VO3Hdiffusion.png>
+Package pdftex.def Info: NEB_calculation_4by1cell_2VO3Hdiffusion.png  used on i
+nput line 121.
+(pdftex.def)             Requested size: 510.0pt x 346.9284pt.
 
 No file ACS_VanadiumOxideClusters.bbl.
 [1{/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
@@ -900,16 +907,17 @@ ers_TiO2_101sur_3by1supercell.png>] [5 <./V2O4_TiO2_101sur_3by1supercell.png> <
 ./V2O4_H2O_TiO2_101sur_3by1supercell.png> <./V2O4_2H2O_TiO2_101sur_3by1supercel
 l.png>] [6 <./V2O5_TiO2_101sur_4by1supercell.png> <./V2O5_2H2O_H2O_TiO2_101sur_
 4by1supercell.png>] [7 <./BE_order_1Ov_2ndrow_V2O5clu_TiO2_101sur.png>]
-[8 <./BE_order_2Ov_V2O5clu_TiO2_101sur.png>] (./ACS_VanadiumOxideClusters.aux)
+[8 <./BE_order_2Ov_V2O5clu_TiO2_101sur.png>] [9 <./NEB_calculation_4by1cell_2VO
+3Hdiffusion.png>] (./ACS_VanadiumOxideClusters.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 17911 strings out of 492649
- 368742 string characters out of 6129622
- 441169 words of memory out of 5000000
- 21406 multiletter control sequences out of 15000+600000
+ 17916 strings out of 492649
+ 368976 string characters out of 6129622
+ 442169 words of memory out of 5000000
+ 21410 multiletter control sequences out of 15000+600000
  17015 words of font info for 63 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,6n,69p,478b,284s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -918,10 +926,10 @@ Here is how much of TeX's memory you used:
 sr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/
 local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr
 /local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb>
-Output written on ACS_VanadiumOxideClusters.pdf (8 pages, 2818803 bytes).
+Output written on ACS_VanadiumOxideClusters.pdf (9 pages, 3029055 bytes).
 PDF statistics:
- 83 PDF objects out of 1000 (max. 8388607)
- 39 compressed objects within 1 object stream
+ 88 PDF objects out of 1000 (max. 8388607)
+ 41 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 83 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 88 words of extra memory for PDF output out of 10000 (max. 10000000)
 

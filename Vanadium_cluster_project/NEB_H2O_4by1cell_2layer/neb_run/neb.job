@@ -1,0 +1,16 @@
+#!/bin/bash
+#SBATCH --job-name=2VO3Hdiffneb
+#SBATCH --partition=q28,q36,q24,q20
+#SBATCH --mem=0G
+#SBATCH --nodes=5
+#SBATCH --ntasks-per-node=20
+#SBATCH --time=200:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --no-requeue
+
+source /home/siva/.gpaw1_5
+export OMPI_MCA_btl="vader,self"
+export OMPI_MCA_btl="self,openib"
+
+cd $SLURM_SUBMIT_DIR
+mpiexec --mca mpi_warn_on_fork 0 gpaw-python run_neb.py
