@@ -1,0 +1,8 @@
+from ase.io import read, write
+from ase.visualize import view
+
+data=read('2VO3Htransmodifiednebimages3.traj@:')
+image =data[-1]
+cell=image.get_cell()
+print(image.get_cell())
+write('2VO3Htrans_final_TiO21013by1cell2layer.xyz',image,vec_cell=True)
