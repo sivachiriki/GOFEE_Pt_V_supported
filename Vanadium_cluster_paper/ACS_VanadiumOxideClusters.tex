@@ -70,6 +70,10 @@ $ii)$  Why same features were not observed after and during water exposure
 $iii)$ No clear evidence of what is the composition of oxygen while formation of oxide clusters 
 
 \section{Methodology}
+In order to answer for the key questions raised in previous section, we have considered monomer and dimer vanadium oxide clusters to explore different oxidation states of Vanadium such as VO$_2$, V$_2$O$_4$ and V$_2$O$_5$.
+Thereafter we added one water and two water molecules to these oxides individually and ran unbiased global optimisations. In the present work, we have used anatase-TiO2 (101) surface with there layer. Top two layers are allowed for relaxations and bottom layer was frozen. Different sized super cells as shown in Fig \ref{fig:supercells} are used in this work. Very small clusters (VO$_2$) are done on the $2\times1$ and medium sized clusters (VO$_2$H$_2$O, VO$_2$2H$_2$O ,V$_2$O$_4$ and V$_2$O$_4$H$_2$O and V$_2$O$_4$2H$_2$O) are done on the $3\times1$ super cell and bigger clusters are done on the $4\times1$ super cell. All the global optimization runs were done on the stoichiometric surface with respective super cell sizes mentioned here based on the  different size of the cluster. After global optimizations low-lying isomers are collected based on the DFT energy. Further, we have re-optimized these structures with reduced surface by creating one oxygen vacancy in second layer. The final order of the structures are considered based on the DFT energy with reduced surface, because in the experiments the surface is reduced.   
+
+In this work, global optimization of first principle energy evaluation( GOFEE ) was used as global optimization method. It explores the potential energy surface and simultaneously it constructs the machine learning surrogate potential energy and using this potential it finds global minimum.
 
 \begin{figure*}
 \centering
@@ -78,7 +82,7 @@ $iii)$ No clear evidence of what is the composition of oxygen while formation of
 \includegraphics[width=0.2\textwidth]{TiO2_101sur_4by1supercell.png}
 \includegraphics[width=0.4\textwidth]{TiO2_101sur_6by2supercell.png}
 \caption{Different super cell size of surfaces used in all the calculations.}
-\label{fig:exptobser}
+\label{fig:supercells}
 \end{figure*}
 \section{Results}
 \subsection{low-lying isomers found for VO$_2$ , VO$_2$H$_2$O and VO$_2$2H$_2$O clusters}
