@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.7.27)  6 MAR 2020 15:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.5.28)  9 MAR 2020 11:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -820,92 +820,92 @@ Class revtex4-1 Warning: Float cannot be placed.
 <TiO2_101sur_2by1supercell.png, id=6, 251.4996pt x 416.9979pt>
 File: TiO2_101sur_2by1supercell.png Graphic file (type png)
 <use TiO2_101sur_2by1supercell.png>
-Package pdftex.def Info: TiO2_101sur_2by1supercell.png  used on input line 78.
+Package pdftex.def Info: TiO2_101sur_2by1supercell.png  used on input line 80.
 (pdftex.def)             Requested size: 101.99844pt x 169.11864pt.
 <TiO2_101sur_3by1supercell.png, id=7, 216.81pt x 416.9979pt>
 File: TiO2_101sur_3by1supercell.png Graphic file (type png)
 <use TiO2_101sur_3by1supercell.png>
-Package pdftex.def Info: TiO2_101sur_3by1supercell.png  used on input line 79.
+Package pdftex.def Info: TiO2_101sur_3by1supercell.png  used on input line 81.
 (pdftex.def)             Requested size: 101.99844pt x 196.17992pt.
 <TiO2_101sur_4by1supercell.png, id=8, 190.7928pt x 416.9979pt>
 File: TiO2_101sur_4by1supercell.png Graphic file (type png)
 <use TiO2_101sur_4by1supercell.png>
-Package pdftex.def Info: TiO2_101sur_4by1supercell.png  used on input line 80.
+Package pdftex.def Info: TiO2_101sur_4by1supercell.png  used on input line 82.
 (pdftex.def)             Requested size: 101.99844pt x 222.92941pt.
 <TiO2_101sur_6by2supercell.png, id=9, 318.7107pt x 489.2679pt>
 File: TiO2_101sur_6by2supercell.png Graphic file (type png)
 <use TiO2_101sur_6by2supercell.png>
-Package pdftex.def Info: TiO2_101sur_6by2supercell.png  used on input line 81.
+Package pdftex.def Info: TiO2_101sur_6by2supercell.png  used on input line 83.
 (pdftex.def)             Requested size: 203.99689pt x 313.16771pt.
 <VO2_VO2H2Oclusters_TiO2_101sur_2by1supercell.png, id=10, 865.17514pt x 296.651
 14pt>
 File: VO2_VO2H2Oclusters_TiO2_101sur_2by1supercell.png Graphic file (type png)
 <use VO2_VO2H2Oclusters_TiO2_101sur_2by1supercell.png>
 Package pdftex.def Info: VO2_VO2H2Oclusters_TiO2_101sur_2by1supercell.png  used
- on input line 89.
+ on input line 91.
 (pdftex.def)             Requested size: 510.0pt x 174.86874pt.
 <VO2_2H2Oclusters_TiO2_101sur_3by1supercell.png, id=11, 953.964pt x 310.41685pt
 >
 File: VO2_2H2Oclusters_TiO2_101sur_3by1supercell.png Graphic file (type png)
 <use VO2_2H2Oclusters_TiO2_101sur_3by1supercell.png>
 Package pdftex.def Info: VO2_2H2Oclusters_TiO2_101sur_3by1supercell.png  used o
-n input line 90.
+n input line 92.
 (pdftex.def)             Requested size: 510.0pt x 165.95532pt.
 <V2O4_TiO2_101sur_3by1supercell.png, id=12, 854.16257pt x 329.68886pt>
 File: V2O4_TiO2_101sur_3by1supercell.png Graphic file (type png)
 <use V2O4_TiO2_101sur_3by1supercell.png>
 Package pdftex.def Info: V2O4_TiO2_101sur_3by1supercell.png  used on input line
- 99.
+ 101.
 (pdftex.def)             Requested size: 510.0pt x 196.84895pt.
 <V2O4_H2O_TiO2_101sur_3by1supercell.png, id=13, 928.49742pt x 311.79343pt>
 File: V2O4_H2O_TiO2_101sur_3by1supercell.png Graphic file (type png)
 <use V2O4_H2O_TiO2_101sur_3by1supercell.png>
 Package pdftex.def Info: V2O4_H2O_TiO2_101sur_3by1supercell.png  used on input 
-line 100.
+line 102.
 (pdftex.def)             Requested size: 510.0pt x 171.26329pt.
 <V2O4_2H2O_TiO2_101sur_3by1supercell.png, id=14, 831.44914pt x 329.00056pt>
 File: V2O4_2H2O_TiO2_101sur_3by1supercell.png Graphic file (type png)
 <use V2O4_2H2O_TiO2_101sur_3by1supercell.png>
 Package pdftex.def Info: V2O4_2H2O_TiO2_101sur_3by1supercell.png  used on input
- line 101.
+ line 103.
 (pdftex.def)             Requested size: 510.0pt x 201.8045pt.
 <V2O5_TiO2_101sur_4by1supercell.png, id=15, 838.332pt x 294.58629pt>
 File: V2O5_TiO2_101sur_4by1supercell.png Graphic file (type png)
 <use V2O5_TiO2_101sur_4by1supercell.png>
 Package pdftex.def Info: V2O5_TiO2_101sur_4by1supercell.png  used on input line
- 110.
+ 112.
 (pdftex.def)             Requested size: 510.0pt x 179.2119pt.
 <V2O5_2H2O_H2O_TiO2_101sur_4by1supercell.png, id=16, 490.74771pt x 417.10114pt>
 
 File: V2O5_2H2O_H2O_TiO2_101sur_4by1supercell.png Graphic file (type png)
 <use V2O5_2H2O_H2O_TiO2_101sur_4by1supercell.png>
 Package pdftex.def Info: V2O5_2H2O_H2O_TiO2_101sur_4by1supercell.png  used on i
-nput line 111.
+nput line 113.
 (pdftex.def)             Requested size: 510.0pt x 433.48854pt.
 <BE_order_1Ov_2ndrow_V2O5clu_TiO2_101sur.png, id=17, 535.5207pt x 599.841pt>
 File: BE_order_1Ov_2ndrow_V2O5clu_TiO2_101sur.png Graphic file (type png)
 <use BE_order_1Ov_2ndrow_V2O5clu_TiO2_101sur.png>
 Package pdftex.def Info: BE_order_1Ov_2ndrow_V2O5clu_TiO2_101sur.png  used on i
-nput line 119.
+nput line 121.
 (pdftex.def)             Requested size: 510.0pt x 571.27354pt.
 <BE_order_2Ov_V2O5clu_TiO2_101sur.png, id=18, 643.9257pt x 660.5478pt>
 File: BE_order_2Ov_V2O5clu_TiO2_101sur.png Graphic file (type png)
 <use BE_order_2Ov_V2O5clu_TiO2_101sur.png>
 Package pdftex.def Info: BE_order_2Ov_V2O5clu_TiO2_101sur.png  used on input li
-ne 126.
+ne 128.
 (pdftex.def)             Requested size: 510.0pt x 523.17764pt.
 <NEB_calculation_4by1cell_2VO3Hdiffusion.png, id=19, 710.31085pt x 483.17657pt>
 
 File: NEB_calculation_4by1cell_2VO3Hdiffusion.png Graphic file (type png)
 <use NEB_calculation_4by1cell_2VO3Hdiffusion.png>
 Package pdftex.def Info: NEB_calculation_4by1cell_2VO3Hdiffusion.png  used on i
-nput line 133.
+nput line 135.
 (pdftex.def)             Requested size: 510.0pt x 346.9284pt.
 No file ACS_VanadiumOxideClusters.bbl.
 [1{/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 
 LaTeX Warning: A float is stuck (cannot be placed); try class option [floatfix]
- on input line 140.
+ on input line 142.
 
 [2 <./Expert_claim.png>] [3 <./TiO2_101sur_2by1supercell.png> <./TiO2_101sur_3b
 y1supercell.png> <./TiO2_101sur_4by1supercell.png> <./TiO2_101sur_6by2supercell
@@ -923,11 +923,11 @@ LaTeX Warning: There were multiply-defined labels.
 Here is how much of TeX's memory you used:
  17918 strings out of 492649
  369004 string characters out of 6129622
- 445183 words of memory out of 5000000
+ 446183 words of memory out of 5000000
  21412 multiletter control sequences out of 15000+600000
  17015 words of font info for 63 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,6n,69p,1199b,284s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 55i,6n,69p,1185b,284s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
 ></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><
 /usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></us
@@ -936,7 +936,7 @@ ocal/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/loca
 l/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/loc
 al/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/loca
 l/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb>
-Output written on ACS_VanadiumOxideClusters.pdf (9 pages, 3065161 bytes).
+Output written on ACS_VanadiumOxideClusters.pdf (9 pages, 3066014 bytes).
 PDF statistics:
  100 PDF objects out of 1000 (max. 8388607)
  50 compressed objects within 1 object stream
